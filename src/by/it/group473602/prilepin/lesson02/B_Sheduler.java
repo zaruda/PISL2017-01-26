@@ -1,6 +1,7 @@
 package by.it.group473602.prilepin.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 даны интервальные события events
@@ -11,9 +12,9 @@ import java.util.List;
 
 */
 
-public class B_Sheduler {
+public class B_Sheduler{
     //событие у аудитории(два поля: начало и конец)
-    static class Event {
+    static class Event implements Comparable{
         int start;
         int stop;
 
@@ -25,6 +26,23 @@ public class B_Sheduler {
         @Override
         public String toString() {
             return "("+ start +":" + stop + ")";
+        }
+
+        @Override
+        public int compareTo(Object obj) {
+            Event tmp = (Event)obj;
+            if(this.stop < tmp.stop)
+            {
+      /* текущее меньше полученного */
+                return -1;
+            }
+            else if(this.stop > tmp.stop)
+            {
+      /* текущее больше полученного */
+                return 1;
+            }
+    /* текущее равно полученному */
+            return 0;
         }
     }
 
@@ -51,10 +69,15 @@ public class B_Sheduler {
         result = new ArrayList<>();
         //ваше решение.
 
+        Arrays.sort(events);
 
+        result.add(events[0]);
 
-
-
+        for (int i = 1; i < events.length; i++){
+            if (events[i].start >= result.get(result.size()-1).stop){
+                result.add(events[i]);
+            }
+        }
 
         return result;                        //вернем итог
     }
