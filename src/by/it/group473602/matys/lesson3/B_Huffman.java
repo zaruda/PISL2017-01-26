@@ -31,7 +31,6 @@ import java.util.regex.Pattern;
 //        Sample Output 1:
 //        a
 
-
 //        Sample Input 2:
 //        4 14
 //        a: 0
@@ -46,48 +45,48 @@ import java.util.regex.Pattern;
 public class B_Huffman {
 
     String decode(File file) throws FileNotFoundException {
-     
-        //прочитаем строку для кодирования из тестового файла
-        Scanner scanner = new Scanner(file);
-        Integer count = scanner.nextInt();
-        Integer length = scanner.nextInt();
-        
-        Map< String, Character> codes = new TreeMap<>();
-        
-        Pattern pattern = Pattern.compile("[a-zA-Z]{1}:[0-1]{1,}");
-    
-        while(scanner.hasNext(pattern)){
-           String line = scanner.next();
-           String key = line.substring(2);
-           Character value = line.charAt(0);
-           codes.put(key, value);
-        }
-        String inputString = scanner.next();
-        System.out.println(inputString);
-        
-        StringBuilder result=new StringBuilder();
-        StringBuilder currentCode = new StringBuilder(); 
-        
-        for(int i=0;i<length;i++){
-            currentCode.append(inputString.charAt(i));
-            System.out.println(currentCode.toString());
-            if(inputString.charAt(i) == '0'){
-        	result.append(codes.get(currentCode.toString()));
-        	currentCode = new StringBuilder();
-            }
-        }
-        result.append(codes.get(currentCode.toString()));
-    
-        return result.toString(); //01001100100111
+
+	// прочитаем строку для кодирования из тестового файла
+	Scanner scanner = new Scanner(file);
+	@SuppressWarnings("unused")
+	Integer count = scanner.nextInt();
+	Integer length = scanner.nextInt();
+
+	Map<String, Character> codes = new TreeMap<>();
+
+	Pattern pattern = Pattern.compile("[a-zA-Z]{1}:[0-1]{1,}");
+
+	while (scanner.hasNext(pattern)) {
+	    String line = scanner.next();
+	    String key = line.substring(2);
+	    Character value = line.charAt(0);
+	    codes.put(key, value);
+	}
+	String inputString = scanner.next();
+
+	scanner.close();
+
+	StringBuilder result = new StringBuilder();
+	StringBuilder currentCode = new StringBuilder();
+
+	for (int i = 0; i < length; i++) {
+	    currentCode.append(inputString.charAt(i));
+	    if (inputString.charAt(i) == '0') {
+		result.append(codes.get(currentCode.toString()));
+		currentCode = new StringBuilder();
+	    }
+	}
+	result.append(codes.get(currentCode.toString()));
+
+	return result.toString(); // 01001100100111
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/group473602/matys/lesson3/encodeHuffman.txt");
-        B_Huffman instance = new B_Huffman();
-        String result = instance.decode(f);
-        System.out.println(result);
+	String root = System.getProperty("user.dir") + "/src/";
+	File f = new File(root + "by/it/group473602/matys/lesson3/encodeHuffman.txt");
+	B_Huffman instance = new B_Huffman();
+	String result = instance.decode(f);
+	System.out.println(result);
     }
-
 
 }
