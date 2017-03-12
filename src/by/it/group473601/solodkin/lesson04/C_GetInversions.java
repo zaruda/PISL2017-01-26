@@ -3,6 +3,7 @@ package by.it.group473601.solodkin.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -35,6 +36,51 @@ Sample Output:
 
 public class C_GetInversions {
 
+    class ArrayWithInversions {
+        int inversions;
+        int[] array;
+
+        public ArrayWithInversions(int inversions, int[] array) {
+            this.inversions = inversions;
+            this.array = array;
+        }
+    }
+
+    ArrayWithInversions merge(ArrayWithInversions left, ArrayWithInversions right){
+        int inversions = 0;
+        int[] first = left.array;
+        int[] second = right.array;
+        int[] result = new int[first.length + second.length];
+        int firstIndex = 0;
+        int secondIndex = 0;
+        for (int i = 0; i < result.length; i++) {
+            if (firstIndex >= first.length){
+                result[i] = second[secondIndex];
+                secondIndex++;
+            } else if (secondIndex >= second.length) {
+                result[i] = first[firstIndex];
+                firstIndex++;
+            } else if (first[firstIndex] <= second[secondIndex]) {
+                result[i] = first[firstIndex];
+                firstIndex++;
+            } else {
+                result[i] = second[secondIndex];
+                secondIndex++;
+                inversions++;
+            }
+        }
+        return new ArrayWithInversions(inversions + left.inversions + right.inversions, result);
+    }
+
+    ArrayWithInversions mergeSort(ArrayWithInversions arrayWithInversions){
+        if (arrayWithInversions.array.length < 2)
+            return arrayWithInversions;
+        int[] array = arrayWithInversions.array;
+        int[] left = Arrays.copyOfRange(array, 0, array.length/2);
+        int[] right = Arrays.copyOfRange(array, array.length/2, array.length);
+        return merge(mergeSort(new ArrayWithInversions(0, left)), mergeSort(new ArrayWithInversions(0, right)));
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,15 +94,7 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        result = mergeSort(new ArrayWithInversions(0, a)).inversions;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
