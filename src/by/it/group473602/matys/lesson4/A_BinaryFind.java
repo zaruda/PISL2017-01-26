@@ -30,8 +30,7 @@ public class A_BinaryFind {
     int[] findIndex(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
+    
         //размер отсортированного массива
         int n = scanner.nextInt();
         //сам отсортированный массива
@@ -48,7 +47,7 @@ public class A_BinaryFind {
             result[i]=indexOf(a, value);
         }
         scanner.close();
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
         return result;
     }
 
@@ -59,7 +58,7 @@ public class A_BinaryFind {
             int middle = left + (right - left) / 2;
             if      (key < a[middle]) right = middle - 1;
             else if (key > a[middle]) left = middle + 1;
-            //Specific array numbering
+            //Specific array numbering, that's why +1
             else return middle+1;
         }
         return -1;
