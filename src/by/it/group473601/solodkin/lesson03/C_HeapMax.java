@@ -43,22 +43,48 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
+        private void swapElements(int firstIndex, int secondIndex) {
+            Long buf = heap.get(firstIndex);
+            heap.set(firstIndex, heap.get(secondIndex));
+            heap.set(secondIndex, buf);
+        }
 
+        int siftDown(int i) { //просеивание вниз
+            while (2 * i + 1 < heap.size()) {
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                int j = left;
+                if (right < heap.size() && heap.get(right) > heap.get(left)) {
+                    j = right;
+                }
+                if (heap.get(i) >= heap.get(j)) {
+                    break;
+                }
+                swapElements(i, j);
+                i = j;
+            }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
-
+        int siftUp(int i) { //просеивание вверх
+            while (heap.get(i) > heap.get((i - 1) / 2)) {
+                swapElements(i, (i - 1) / 2);
+                i = (i - 1) / 2;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.size() - 1);
         }
 
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
-
+            result = heap.get(0);
+            swapElements(0, heap.size());
+            heap.remove(heap.size() - 1);
+            siftDown(0);
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -84,7 +110,7 @@ public class C_HeapMax {
                 if (p[0].equalsIgnoreCase("insert"))
                     heap.insert(Long.parseLong(p[1]));
                 i++;
-            //System.out.println(heap); //debug
+                //System.out.println(heap); //debug
             }
         }
         return maxValue;
