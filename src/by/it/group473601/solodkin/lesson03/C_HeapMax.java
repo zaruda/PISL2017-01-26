@@ -82,7 +82,7 @@ public class C_HeapMax {
         Long extractMax() { //извлечение и удаление максимума
             Long result = null;
             result = heap.get(0);
-            swapElements(0, heap.size());
+            swapElements(0, heap.size() - 1);
             heap.remove(heap.size() - 1);
             siftDown(0);
             return result;
