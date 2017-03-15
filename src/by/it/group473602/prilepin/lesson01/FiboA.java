@@ -33,7 +33,7 @@ public class FiboA {
      int x = 1;
         int y=0;
         int ans=0;
-        for (int i = 1; i<=n; i++){
+        for (int i = 1; i<=n; i++){//refactor
             ans = x+y;
             x = y;
             y = ans;
