@@ -38,13 +38,28 @@ public class C_QSortOptimized {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if (start < stop) {
+                this.start = start;
+                this.stop = stop;
+            }
+            else {
+                this.start = stop;
+                this.stop = start;
+            }
         }
 
         @Override
-        public int compareTo(Object o) {
+        public int compareTo(Object object) {
             //подумайте, что должен возвращать компаратор отрезков
+            Segment segment = (Segment) object;
+            if(this.stop < segment.stop) {  /* текущее меньше полученного */
+                return -1;
+            }
+            else {
+                if (this.stop > segment.stop) {  /* текущее больше полученного */
+                    return 1;
+                }
+            }
             return 0;
         }
     }
@@ -74,10 +89,43 @@ public class C_QSortOptimized {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
-
+        quickSort(segments, 0, segments.length - 1);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++){
+                if (points[i] >= segments[j].start && points[i] <= segments[j].stop){
+                    result[i]++;
+                }
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+
+    public static void quickSort (Segment[] arr, int b, int e)
+    {
+        int l = b, r = e;
+        Segment basic = arr[(l + r) / 2]; // Опорным элементом для примера возьмём средний
+        while (l <= r)
+        {
+            while (arr[l].compareTo(basic) == -1)
+                l++;
+            while (arr[l].compareTo(basic) == 1)
+                r--;
+            if (l <= r)
+                swap (arr[l++], arr[r--]);
+        }
+        if (b < r)
+            quickSort (arr, b, r);
+        if (e > l)
+            quickSort (arr, l, e);
+    }
+    public static void swap(Segment number1, Segment number2){
+        Segment tmp = number1;
+        number1 = number2;
+        number2 = tmp;
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
