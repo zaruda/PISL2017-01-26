@@ -17,37 +17,49 @@ import java.util.Scanner;
 
 public class B_CountSort {
 
-
     int[] countSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //размер массива
         int n = scanner.nextInt();
-        int[] points=new int[n];
+        int[] points = new int[n];
 
         //читаем точки
         for (int i = 0; i < n; i++) {
-            points[i]=scanner.nextInt();
+            points[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
+        int countDifferentNumbers = 10;
+        int[] arrayCount = new int[countDifferentNumbers + 1];
+        for (int j = 1; j < n; j++){
+            arrayCount[points[j]] += 1;
+        }
+        for (int i = 2; i < countDifferentNumbers + 1; i++){
+            arrayCount[i] += arrayCount[i - 1];
+        }
+        int[] result = new int[n];
+        for (int j = n - 1; j >= 0; j--){
+            result[arrayCount[points[j]]] = points[j];
+            arrayCount[points[j]] -= 1;
+        }
 
-
-
+        return result;
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return points;
+        //return points;
     }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/group473601/zinkevich/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
-        int[] result=instance.countSort(stream);
-        for (int index:result){
-            System.out.print(index+" ");
+        int[] result = instance.countSort(stream);
+        for (int index : result) {
+            System.out.print(index + " ");
         }
     }
 
