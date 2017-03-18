@@ -44,14 +44,52 @@ public class C_LongNotUpSubSeq {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
         int n = scanner.nextInt();
-        int[] m = new int[n];
+        int[] initArray = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
-            m[i] = scanner.nextInt();
+            initArray[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
 
+
+        int[] prev = new int[n];
+        int[] array = new int[n];
+        for (int i = 0; i < n; i++){
+            array[i] = 1;
+            prev[i] = -1;
+            for (int j = 0; j <= i - 1; j++){
+                if ((initArray[j] >= initArray[i]) && (array[j] + 1 > array[i])){
+                    array[i] = array[j] + 1;
+                    prev[i] = j;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++){
+            if (result < array[i]){
+                result = array[i];
+            }
+        }
+
+        // восстановление ответа
+        int[] index = new int [result];
+        int k = 1;
+        for (int i = 2; i < n; i++){
+            if (array[i] > array[k]){
+                k = i;
+            }
+        }
+        int j = result - 1;
+        while(k > 0){
+            index[j] = k;
+            j--;
+            k = prev[k];
+        }
+
+        for (int i = 0; i < result; i++){
+            System.out.print(index[i] + 1 + " ");
+        }
+        System.out.println();
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
