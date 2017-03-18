@@ -50,7 +50,7 @@ public class A_LIS {
         int[] array = new int[n];
         for (int i = 0; i < n; i++){
             array[i] = 1;
-            for (int j = 0; j < i - 1; j++){
+            for (int j = 0; j <= i - 1; j++){
                 if ((initArray[j] < initArray[i]) && (array[j] + 1 > array[i])){
                     array[i] = array[j] + 1;
                 }
