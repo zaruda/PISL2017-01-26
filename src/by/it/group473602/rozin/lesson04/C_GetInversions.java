@@ -49,22 +49,56 @@ public class C_GetInversions {
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-
-
-
-
-
-
+        mergeSort(a, 0, a.length - 1);
+        //  System.out.println(inversion);
+        result = countInversion;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private int countInversion = 0;
+
+    int[] merge(int[] ar_1, int[] ar_2) {
+        int max = ar_1.length + ar_2.length;
+        int[] result = new int[max];
+        int m = 0, n = 0;
+        for (int i = 0; i < max; i++) {
+            if (m >= ar_1.length & n < ar_2.length) {
+                result[i] = ar_2[n];
+                n++;
+            } else if (n >= ar_2.length & m < ar_1.length) {
+                result[i] = ar_1[m];
+                m++;
+            } else if (ar_1[m] <= ar_2[n] & m < ar_1.length) {
+                result[i] = ar_1[m];
+                m++;
+            } else {
+                if (ar_1[m] > ar_2[n]) {
+                    countInversion += ar_1.length - m;
+                }
+                result[i] = ar_2[n];
+                n++;
+            }
+        }
+
+        return result;
+    }
+
+    int[] mergeSort(int[] arr, int left, int right) {
+        int[] result = new int[1];
+        int middle = (int) (left + right) / 2;
+        if (left < right) {
+            return merge(mergeSort(arr, left, middle), mergeSort(arr, middle + 1, right));
+        } else {
+            result[0] = arr[left];
+            return result;
+        }
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473602/rozin/lesson04/  dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473602/rozin/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
