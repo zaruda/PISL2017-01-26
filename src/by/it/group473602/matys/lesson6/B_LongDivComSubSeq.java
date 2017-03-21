@@ -6,9 +6,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 /*
-Задача на программирование: наибольшая возростающая подпоследовательность
-см.     https://ru.wikipedia.org/wiki/Задача_поиска_наибольшей_увеличивающейся_подпоследовательности
-        https://en.wikipedia.org/wiki/Longest_increasing_subsequence
+Задача на программирование: наибольшая кратная подпоследовательность
 
 Дано:
     целое число 1≤n≤1000
@@ -17,47 +15,48 @@ import java.util.Scanner;
 Необходимо:
     Выведите максимальное 1<=k<=n, для которого гарантированно найдётся
     подпоследовательность индексов i[1]<i[2]<…<i[k] <= длины k,
-    для которой каждый элемент A[i[k]]больше любого предыдущего
-    т.е. для всех 1<=j<k, A[i[j]]<A[i[j+1]].
+    для которой каждый элемент A[i[k]] делится на предыдущий
+    т.е. для всех 1<=j<k, A[i[j+1]] делится на A[i[j]].
 
 Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
 
     Sample Input:
-    5
-    1 3 3 2 6
+    4
+    3 6 7 12
 
     Sample Output:
     3
 */
 
-public class A_LIS {
+public class B_LongDivComSubSeq {
 
-    public int lengthOfLIS(int[] numbers) {
+    public int lengthOfLongDivComSubSeq(int[] numbers) {
 	if (numbers == null || numbers.length == 0) {
 	    return 0;
 	}
 
-	int[] max = new int[numbers.length];
+	int[] maxLength = new int[numbers.length];
 
 	for (int i = 0; i < numbers.length; i++) {
-	    max[i] = 1;
+	    maxLength[i] = 1;
 	    for (int j = 0; j < i; j++) {
-		if (numbers[i] > numbers[j]) {
-		    max[i] = Math.max(max[i], max[j] + 1);
+		if (numbers[i] % numbers[j] == 0 && maxLength[j] + 1 > maxLength[i]) {
+		    maxLength[i] = maxLength[j] + 1;
 		}
 	    }
 	}
 
 	int result = 0;
-	for (int i = 0; i < max.length; i++) {
-	    if (max[i] > result) {
-		result = max[i];
+	for (int i = 0; i < maxLength.length; i++) {
+	    if (maxLength[i] > result) {
+		result = maxLength[i];
 	    }
 	}
+
 	return result;
     }
 
-    int getSeqSize(InputStream stream) throws FileNotFoundException {
+    int getDivSeqSize(InputStream stream) throws FileNotFoundException {
 	// подготовка к чтению данных
 	Scanner scanner = new Scanner(stream);
 	// !!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -70,16 +69,17 @@ public class A_LIS {
 	}
 	scanner.close();
 	
-	int result = lengthOfLIS(m);
+	int result = lengthOfLongDivComSubSeq(m);
 
 	return result;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 	String root = System.getProperty("user.dir") + "/src/";
-	InputStream stream = new FileInputStream(root + "by/it/group473602/matys/lesson6/dataA.txt");
-	A_LIS instance = new A_LIS();
-	int result = instance.getSeqSize(stream);
+	InputStream stream = new FileInputStream(root + "by/it/group473602/matys/lesson6/dataB.txt");
+	B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
+	int result = instance.getDivSeqSize(stream);
 	System.out.print(result);
     }
+
 }
