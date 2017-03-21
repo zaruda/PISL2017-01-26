@@ -52,7 +52,6 @@ public class C_LongNotUpSubSeq {
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
 
-
         int[] prev = new int[n];
         int[] array = new int[n];
         for (int i = 0; i < n; i++){
@@ -84,7 +83,7 @@ public class C_LongNotUpSubSeq {
             index[j] = k;
             j--;
             k = prev[k];
-        }
+    }
 
         for (int i = 0; i < result; i++){
             System.out.print(index[i] + 1 + " ");
