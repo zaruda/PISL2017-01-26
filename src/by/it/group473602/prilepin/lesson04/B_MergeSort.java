@@ -21,7 +21,7 @@ Sample Output:
 */
 public class B_MergeSort {
 
- /*   int[] merge(int[] ar_1, int[] ar_2){
+    int[] merge(int[] ar_1, int[] ar_2){
         int max = ar_1.length + ar_2.length;
         int[] result = new int[max];
         int m = 0, n = 0;
@@ -53,41 +53,6 @@ public class B_MergeSort {
             return result;
         }
     }
-    */
-
-   int [] mergeSort(int a[], int start, int end){
-        if (end - start < 2 ) return a;
-        if (end - start == 2){
-            if (a[start]>a[start + 1]);
-            int c;
-            c=a[start];
-            a[start]=a[start+1];
-            a[start+1]=c;
-        }
-        mergeSort(a, start, start+(end-start)/2);
-        mergeSort(a, start+(end-start)/2, end);
-        int [] b = new int[end-start];
-        int b1 = start;
-        int e1 = start+(end-start)/2;
-        int b2 = e1;
-        int i=0;
-        while (i < end -start){
-            if (b1 >= e1 || (b2 < end && a[b2]<=a[b1])){
-                b[i]=a[b2];
-                ++b2;
-                i++;
-            }
-            else{
-                b[i]=a[b1];
-                ++b1;
-                i++;
-            }
-        }
-        for (i = start; i<end; ++i){
-            a[i] = b[i-start];
-        }
-        return a;
-    }
 
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -109,12 +74,15 @@ public class B_MergeSort {
 
         a = mergeSort(a, 0, a.length - 1);
 
+
+
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return a;
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);

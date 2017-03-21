@@ -44,28 +44,18 @@ public class A_BinaryFind {
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result=new int[k];
-        for (int i = 0; i < k; i++) {
+        int l = 0, r = n;
+        for (l=0; l < r; l++) {
             int value = scanner.nextInt();
+            System.out.print(value);
             //тут реализуйте бинарный поиск индекса
-            int l = 0, r=n;
-            int flag = 0;
-            while(l<r){
-                int m = (l+r)/2;
-                if (a[m]==value){
-                    result[i]=m+1;
-                    flag = 1;
-                    break;
-                }
-                else{
-                    if (a[m]>value) r=m-1;
-                    else {
-                        l=m+1;
-                    }
-                }
+            int m = (l+r)/2;
+            if (a[m]==value) result[l]=m;
+            else{
+                if (a[m]>value) r=m-1;
+                else l = m + 1;
             }
-            if (flag != 1 ){
-                result[i]=-1;
-            }
+            result[l]=-1;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
