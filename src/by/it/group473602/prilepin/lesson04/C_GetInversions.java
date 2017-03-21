@@ -35,6 +35,57 @@ Sample Output:
 
 public class C_GetInversions {
 
+    int mergesort(int a[], int p, int r)
+    {
+        int invers = 0;
+        if (p + 1 < r)
+        {
+            int q = (p + r) / 2;
+            invers += mergesort(a, p, q);
+            invers += mergesort(a, q, r);
+            invers += merge(a, p, q, r);
+        }
+        return invers;
+    }
+
+    int merge(int a[], int p, int q, int r)
+    {
+        int n1 = q - p;
+        int n2 = r - q;
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; i++)
+            L[i] = a[p + i];
+
+        for (int i = 0; i < n2; i++)
+            R[i] = a[q + i];
+
+        int i = 0, j = 0, invers = 0;
+        boolean counted = false;
+        for (int k = p; k < r; k++)
+        {
+            if (!counted && L[i] > R[j])
+            {
+                invers += n1;
+                counted = true;
+            }
+            if (j == n2 || (i < n1 && L[i] <= R[j]))
+            {
+                a[k] = L[i];
+                ++i;
+            }
+            else
+            {
+                a[k] = R[j];
+                ++j;
+                if (j < n2)
+                    counted = false;
+            }
+        }
+        return invers;
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,15 +99,7 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        result = mergesort(a, 0, n);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
