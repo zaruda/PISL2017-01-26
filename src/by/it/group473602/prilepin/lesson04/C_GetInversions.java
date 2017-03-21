@@ -35,55 +35,36 @@ Sample Output:
 
 public class C_GetInversions {
 
-    int mergesort(int a[], int p, int r)
-    {
-        int invers = 0;
-        if (p + 1 < r)
-        {
-            int q = (p + r) / 2;
-            invers += mergesort(a, p, q);
-            invers += mergesort(a, q, r);
-            invers += merge(a, p, q, r);
+    int count = 0;
+
+    private int[] merge(int[] a, int b[]){
+        int i=0;
+        int j=0;
+        int []res = new int [a.length + b.length];
+        for (int k = 0; k<res.length; k++){
+            if (j==b.length || (i < a.length && a[i] <= b[j])){
+                res[k] = a[i];
+                i++;
+            } else{
+                count += a.length - i;
+                res[k] = b[j];
+                j++;
+            }
         }
-        return invers;
+        return res;
     }
 
-    int merge(int a[], int p, int q, int r)
-    {
-        int n1 = q - p;
-        int n2 = r - q;
-        int[] L = new int[n1];
-        int[] R = new int[n2];
-
-        for (int i = 0; i < n1; i++)
-            L[i] = a[p + i];
-
-        for (int i = 0; i < n2; i++)
-            R[i] = a[q + i];
-
-        int i = 0, j = 0, invers = 0;
-        boolean counted = false;
-        for (int k = p; k < r; k++)
-        {
-            if (!counted && L[i] > R[j])
-            {
-                invers += n1;
-                counted = true;
-            }
-            if (j == n2 || (i < n1 && L[i] <= R[j]))
-            {
-                a[k] = L[i];
-                ++i;
-            }
-            else
-            {
-                a[k] = R[j];
-                ++j;
-                if (j < n2)
-                    counted = false;
-            }
-        }
-        return invers;
+    private int[] mergeSort(int[] a){
+        if (a.length==1) return a;
+        int n = a.length;
+        int m = n/2;
+        int [] left = new int[m];
+        int [] right = new int[n-m];
+        System.arraycopy(a, 0,left, 0, m);
+        System.arraycopy(a,m,right,0, n-m);
+        left=mergeSort(left);
+        right=mergeSort(right);
+        return merge(left, right);
     }
 
     int calc(InputStream stream) throws FileNotFoundException {
@@ -99,7 +80,8 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-        result = mergesort(a, 0, n);
+        int b[] = mergeSort(a);
+        result = count;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
