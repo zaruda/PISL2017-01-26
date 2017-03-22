@@ -1,6 +1,5 @@
 package by.it.group473602.KondrashevichKseniya.lesson01;
 
-import by.it.group473601.trakhalin.lesson01.FiboA;
 import org.junit.Test;
 
 import java.math.BigInteger;
