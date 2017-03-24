@@ -45,10 +45,69 @@ public class C_QSortOptimized {
         @Override
         public int compareTo(Object o) {
             //подумайте, что должен возвращать компаратор отрезков
+            Segment tmp = (Segment)o;
+            if(this.stop < tmp.stop)
+            {
+      /* текущее меньше полученного */
+                return -1;
+            }
+            else if(this.stop > tmp.stop)
+            {
+      /* текущее больше полученного */
+                return 1;
+            }
+    /* текущее равно полученному */
             return 0;
         }
     }
 
+    private void quick_sort(Segment[] segments, int j, int i){
+        int size = j;
+        int k = i;
+        Segment c = segments[j/2];
+        Segment tmp;
+        do{
+            while(segments[k].compareTo(c)==-1) k++;
+            while(segments[j].compareTo(c)==1) j--;
+
+            if (k<=j){
+                tmp = segments[k];
+                segments[k]=segments[j];
+                segments[j]=tmp;
+                k++;
+                j--;
+            }
+        }while(k<=j);
+
+        if (j>0) quick_sort(segments, j, 0);
+        if (size>k) quick_sort(segments, size-k, k);
+    }
+
+    private int[] binaryFind(Segment [] segments, int[] result, int[] points) {
+        //размер отсортированного массива
+        int n = segments.length-1;
+        //размер массива индексов
+        int k = points.length-1;
+
+        for (int i = 0; i < k; i++) {
+            int value = points[i];
+            //тут реализуйте бинарный поиск индекса
+            int l = 0, r = n;
+            while (l < r) {
+                int m = (l + r) / 2;
+                if (value >= segments[m].start && value <= segments[m].stop) {
+                    result[i]++;
+                    break;
+                } else {
+                    if (segments[m].start > value) r = m - 1;
+                    else {
+                        l = m + 1;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 
     int[] getAccessory2(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -68,12 +127,15 @@ public class C_QSortOptimized {
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
         //читаем точки
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             points[i]=scanner.nextInt();
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        quick_sort(segments, segments.length-1, 0);
+
+        result = binaryFind(segments,result, points);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
