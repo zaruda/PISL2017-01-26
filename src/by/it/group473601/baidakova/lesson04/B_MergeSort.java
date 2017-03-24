@@ -21,36 +21,35 @@ Sample Output:
 */
 public class B_MergeSort {
 
-    int[] merge(int[] argLeft, int[] argRight){
-        int max = argLeft.length + argRight.length;
+    int[] merge(int[] ar_1, int[] ar_2){
+        int max = ar_1.length + ar_2.length;
         int[] result = new int[max];
-        int leftCounter = 0;
-        int rightCounter = 0;
+        int m = 0, n = 0;
         for (int i = 0; i < max; i++){
-            if (leftCounter >= argLeft.length & rightCounter < argRight.length){
-                result[i] = argRight[rightCounter];
-                rightCounter++;
-            }else if(rightCounter >= argRight.length & leftCounter < argLeft.length){
-                result[i] = argLeft[leftCounter];
-                leftCounter++;
-            }else if (argLeft[leftCounter] <= argRight[rightCounter] & leftCounter < argLeft.length){
-                result[i] = argLeft[leftCounter];
-                leftCounter++;
+            if (m >= ar_1.length & n < ar_2.length){
+                result[i] = ar_2[n];
+                n++;
+            }else if(n >= ar_2.length & m < ar_1.length){
+                result[i] = ar_1[m];
+                m++;
+            }else if (ar_1[m] <= ar_2[n] & m < ar_1.length){
+                result[i] = ar_1[m];
+                m++;
             }else {
-                result[i] = argRight[rightCounter];
-                rightCounter++;
+                result[i] = ar_2[n];
+                n++;
             }
         }
         return result;
     }
 
-    int[] mergeSort(int[] array, int leftIndex, int rightIndex){
+    int[] mergeSort(int[] arr, int l, int r){
         int[] result = new int[1];
-        int index = (int)(leftIndex + rightIndex) / 2;
-        if (leftIndex < rightIndex){
-           return merge(mergeSort(array, leftIndex, index), mergeSort(array, index + 1, rightIndex));
+        int index = (int)(l + r) / 2;
+        if (l < r){
+           return merge(mergeSort(arr, l, index), mergeSort(arr, index + 1, r));
         }else {
-            result[0] = array[leftIndex];
+            result[0] = arr[l];
             return result;
         }
     }
@@ -62,20 +61,31 @@ public class B_MergeSort {
         //размер массива
         int n = scanner.nextInt();
         //сам массива
-        int[] array=new int[n];
+        int[] a=new int[n];
         for (int i = 0; i < n; i++) {
-            array[i] = scanner.nextInt();
-            System.out.println(array[i]);
+            a[i] = scanner.nextInt();
+            System.out.println(a[i]);
+
         }
 
-        array = mergeSort(array, 0, array.length - 1);
-        return array;
+        // тут ваше решение (реализуйте сортировку слиянием)
+        // https://ru.wikipedia.org/wiki/Сортировка_слиянием
+
+        a = mergeSort(a, 0, a.length - 1);
+
+
+
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        return a;
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
+        //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
+        //long finishTime = System.currentTimeMillis();
         for (int index:result){
             System.out.print(index+" ");
         }

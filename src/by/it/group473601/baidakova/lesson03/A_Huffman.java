@@ -117,7 +117,7 @@ public class A_Huffman {
 
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
-            //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
         int i = 0;
         for (i = 0; i<line.length(); i++) {
             char currentChar = line.charAt(i);
@@ -132,6 +132,7 @@ public class A_Huffman {
         for (char symbol:count.keySet()) {
             priorityQueue.add(new LeafNode(count.get(symbol), symbol));
         }
+
 
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
@@ -150,6 +151,9 @@ public class A_Huffman {
         for (i=0; i<line.length(); i++) {
             sb.append(codes.get(line.charAt(i)));
         }
+        while (priorityQueue.size()>1) {
+            priorityQueue.add(new InternalNode(priorityQueue.poll(), priorityQueue.poll()));
+        }
 
         return sb.toString();
         //01001100100111
@@ -160,8 +164,7 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/dataHuffman.txt");
-
+        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);

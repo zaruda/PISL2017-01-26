@@ -43,7 +43,7 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вниз
+        int siftDown(int i) { //просеивание вверх
             while(heap.size()>2*i+1) {
                 int leftIndex = 2*i+1;
                 int rightIndex = 2*i+2;
@@ -63,7 +63,7 @@ public class C_HeapMax {
             heap.set(second, tmp);
         }
 
-        int siftUp(int i) { //просеивание вверх
+        int siftUp(int i) { //просеивание вниз
             while (heap.get(i)>heap.get((i-1)/2)) {
                 swap(i, (i-1)/2);
                 i=(i-1)/2;
@@ -114,7 +114,6 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-
         InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));

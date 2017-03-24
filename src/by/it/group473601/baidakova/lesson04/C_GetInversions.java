@@ -46,8 +46,6 @@ public class C_GetInversions {
             a[i] = scanner.nextInt();
         }
         int result = 0;
-
-
         return result;
     }
 
