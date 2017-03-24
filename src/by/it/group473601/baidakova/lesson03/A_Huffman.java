@@ -112,29 +112,45 @@ public class A_Huffman {
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
     String encode(File file) throws FileNotFoundException {
-        //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
-        String s = scanner.next();
-
-        //все комментарии от тестового решения были оставлены т.к. это задание A.
-        //если они вам мешают их можно удалить
+        String line = scanner.next();
 
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
             //для каждого символа добавим 1 если его в карте еще нет или инкремент если есть.
+        int i = 0;
+        for (i = 0; i<line.length(); i++) {
+            char currentChar = line.charAt(i);
+            if (count.containsKey(currentChar)) {
+                count.put(currentChar, count.get(currentChar)+1);
+            }
+            else count.put(currentChar, 1);
+        }
 
         //2. перенесем все символы в приоритетную очередь в виде листьев
         PriorityQueue<Node> priorityQueue = new PriorityQueue<>();
+        for (char symbol:count.keySet()) {
+            priorityQueue.add(new LeafNode(count.get(symbol), symbol));
+        }
+
 
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
         //построим дерево кодирования Хаффмана.
         //У родителя частоты детей складываются.
+        while (priorityQueue.size()>1) {
+            priorityQueue.add(new InternalNode(priorityQueue.poll(), priorityQueue.poll()));
+        }
 
         //4. последний из родителей будет корнем этого дерева
         //это будет последний и единственный элемент оставшийся в очереди priorityQueue.
+        Node root = priorityQueue.poll();
+        root.fillCodes("");
+
         StringBuilder sb = new StringBuilder();
-        //.....
+        for (i=0; i<line.length(); i++) {
+            sb.append(codes.get(line.charAt(i)));
+        }
 
         return sb.toString();
         //01001100100111
@@ -145,7 +161,7 @@ public class A_Huffman {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/a_khmelov/lesson03/dataHuffman.txt");
+        File f = new File(root + "by/it/a_khmelev/lesson03/dataHuffman.txt");
         A_Huffman instance = new A_Huffman();
         long startTime = System.currentTimeMillis();
         String result = instance.encode(f);
