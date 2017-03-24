@@ -114,6 +114,13 @@ public class A_Huffman {
     String encode(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         String line = scanner.next();
+        //прочитаем строку для кодирования из тестового файла
+        Scanner scanner = new Scanner(file);
+        String s = scanner.next();
+
+        //все комментарии от тестового решения были оставлены т.к. это задание A.
+        //если они вам мешают их можно удалить
+        String line = scanner.next();
 
         Map<Character, Integer> count = new HashMap<>();
         //1. переберем все символы по очереди и рассчитаем их частоту в Map count
@@ -133,6 +140,7 @@ public class A_Huffman {
             priorityQueue.add(new LeafNode(count.get(symbol), symbol));
         }
 
+        }
 
         //3. вынимая по два узла из очереди (для сборки родителя)
         //и возвращая этого родителя обратно в очередь
