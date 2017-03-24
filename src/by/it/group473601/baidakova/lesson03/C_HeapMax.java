@@ -43,22 +43,44 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
-
+        int siftDown(int i) { //просеивание вниз
+            while(heap.size()>2*i+1) {
+                int leftIndex = 2*i+1;
+                int rightIndex = 2*i+2;
+                int maxIndex = (rightIndex < heap.size() && heap.get(rightIndex) > heap.get(leftIndex)) ? rightIndex : leftIndex;
+                if (heap.get(maxIndex)<=heap.get(i)) break;
+                else {
+                    swap(i, maxIndex);
+                    i=maxIndex;
+                }
+            }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
+        void swap (int first, int second) {
+            Long tmp=heap.get(first);
+            heap.set(first, heap.get(second));
+            heap.set(second, tmp);
+        }
 
+        int siftUp(int i) { //просеивание вверх
+            while (heap.get(i)>heap.get((i-1)/2)) {
+                swap(i, (i-1)/2);
+                i=(i-1)/2;
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);
+            siftUp(heap.lastIndexOf(value));
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
-
+            Long result = heap.get(0);
+            heap.set(0, 0L);
+            siftDown(0);
+            heap.remove(heap.lastIndexOf(0L));
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -92,7 +114,7 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelev/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));
     }
