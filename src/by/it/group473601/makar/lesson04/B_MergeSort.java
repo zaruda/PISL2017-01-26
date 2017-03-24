@@ -20,7 +20,7 @@ Sample Output:
 2 2 3 9 9
 */
 public class B_MergeSort {
-
+/*
     int[] merge(int[] ar_1, int[] ar_2){
         int max = ar_1.length + ar_2.length;
         int[] result = new int[max];
@@ -53,6 +53,65 @@ public class B_MergeSort {
             return result;
         }
     }
+    */
+
+    private int[] numbers;
+    private int[] helper;
+
+    private int number;
+
+    public void sort(int[] values) {
+        this.numbers = values;
+        number = values.length;
+        this.helper = new int[number];
+        mergesort(0, number - 1);
+    }
+
+    private void mergesort(int low, int high) {
+        // check if low is smaller than high, if not then the array is sorted
+        if (low < high) {
+            // Get the index of the element which is in the middle
+            int middle = low + (high - low) / 2;
+            // Sort the left side of the array
+            mergesort(low, middle);
+            // Sort the right side of the array
+            mergesort(middle + 1, high);
+            // Combine them both
+            merge(low, middle, high);
+        }
+    }
+
+    private void merge(int low, int middle, int high) {
+
+        // Copy both parts into the helper array
+        for (int i = low; i <= high; i++) {
+            helper[i] = numbers[i];
+        }
+
+        int i = low;
+        int j = middle + 1;
+        int k = low;
+        // Copy the smallest values from either the left or the right side back
+        // to the original array
+        while (i <= middle && j <= high) {
+            if (helper[i] <= helper[j]) {
+                numbers[k] = helper[i];
+                i++;
+            } else {
+                numbers[k] = helper[j];
+                j++;
+            }
+            k++;
+        }
+        // Copy the rest of the left side of the array into the target array
+        while (i <= middle) {
+            numbers[k] = helper[i];
+            k++;
+            i++;
+        }
+
+    }
+
 
     int[] getMergeSort(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
@@ -72,7 +131,9 @@ public class B_MergeSort {
         // тут ваше решение (реализуйте сортировку слиянием)
         // https://ru.wikipedia.org/wiki/Сортировка_слиянием
 
-        a = mergeSort(a, 0, a.length - 1);
+        //a = mergeSort(a, 0, a.length - 1);
+
+        sort(a);
 
 
 
@@ -82,7 +143,7 @@ public class B_MergeSort {
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/makar/lesson04/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);
