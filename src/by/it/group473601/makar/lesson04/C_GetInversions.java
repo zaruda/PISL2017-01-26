@@ -3,6 +3,7 @@ package by.it.group473601.makar.lesson04;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -35,6 +36,40 @@ Sample Output:
 
 public class C_GetInversions {
 
+    private long getInverse(int[] massive){
+        if (massive.length < 2) {
+            return 0;
+        }
+        int center = (massive.length + 1) / 2;
+        int leftArray[] = Arrays.copyOfRange(massive, 0, center);
+        int rightArray[] = Arrays.copyOfRange(massive, center, massive.length);
+        long result = getInverse(leftArray) + getInverse(rightArray) + getMerge(massive, leftArray, rightArray);
+        return result;
+    }
+
+    private long getMerge(int[]result, int[]left, int[]right){
+        int count =0;
+        int numberLeft=0;
+        int numberRight=0;
+        while (numberRight < right.length || numberLeft < left.length) {
+            if (numberRight == right.length) {
+                result[numberLeft+numberRight] = left[numberLeft];
+                numberLeft++;
+            } else if (numberLeft == left.length) {
+                result[numberLeft+numberRight] = right[numberRight];
+                numberRight++;
+            } else if (left[numberLeft] <= right[numberRight]) {
+                result[numberLeft+numberRight] = left[numberLeft];
+                numberLeft++;
+            } else {
+                result[numberLeft+numberRight] = right[numberRight];
+                count += left.length-numberLeft;
+                numberRight++;
+            }
+        }
+        return count;
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,15 +83,8 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        result=(int) getInverse(a);
+        System.out.println(result);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -64,7 +92,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/makar/lesson04/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
