@@ -21,24 +21,25 @@ Sample Output:
 */
 public class B_MergeSort {
 
-    int[] merge(int[] ar_1, int[] ar_2){
-        int max = ar_1.length + ar_2.length;
-        int[] result = new int[max];
-        int m = 0, n = 0;
-        for (int i = 0; i < max; i++){
-            if (m >= ar_1.length & n < ar_2.length){
-                result[i] = ar_2[n];
-                n++;
-            }else if(n >= ar_2.length & m < ar_1.length){
-                result[i] = ar_1[m];
-                m++;
-            }else if (ar_1[m] <= ar_2[n] & m < ar_1.length){
-                result[i] = ar_1[m];
-                m++;
-            }else {
-                result[i] = ar_2[n];
-                n++;
+    int[] merge(int[] array1, int[] array2){
+        int size1=array1.length;
+        int size2=array2.length;
+        int[] result=new int[size1+size2];
+        int m1 = 0, n2 = 0;
+        for (int i = 0; i < size1+size2; i++){
+            if(n2<size2 && m1<size1)
+            {
+                if(array1[m1]>array2[n2])
+                    result[i]=array2[n2++];
+                else result[i]=array1[m1++];
             }
+            else if(n2<size2)
+            {
+                result[i]=array2[n2++];
+            }
+
+            else result[i]=array1[m1++];
+
         }
         return result;
     }
@@ -82,7 +83,7 @@ public class B_MergeSort {
     }
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/dontsova/lesson4/dataB.txt");
         B_MergeSort instance = new B_MergeSort();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.getMergeSort(stream);

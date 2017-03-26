@@ -34,6 +34,7 @@ public class A_BinaryFind {
 
         //размер отсортированного массива
         int n = scanner.nextInt();
+
         //сам отсортированный массива
         int[] a=new int[n];
         for (int i = 1; i <= n; i++) {
@@ -43,14 +44,33 @@ public class A_BinaryFind {
         //размер массива индексов
         int k = scanner.nextInt();
         int[] result=new int[k];
+
+
         for (int i = 0; i < k; i++) {
             int value = scanner.nextInt();
             //тут реализуйте бинарный поиск индекса
 
+            int left=0;
+            int right=k;
+
+            while(left<right)
+            {
+                int middle=(left+right)/2;
+                if(a[middle]==value)
+                {
+                    result[i]=middle+1;
+                    break;
+                }
+                else{
+                    if(a[middle]>value)
+                        right=middle-1;
+                    else left=middle+1;
+                }
+                result[i]=-1;
+            }
 
 
 
-            result[i]=0;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -59,7 +79,7 @@ public class A_BinaryFind {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson04/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/dontsova/lesson4/dataA.txt");
         A_BinaryFind instance = new A_BinaryFind();
         //long startTime = System.currentTimeMillis();
         int[] result=instance.findIndex(stream);

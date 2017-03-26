@@ -54,6 +54,7 @@ public class C_HeapMax {
         }
 
         void insert(Long value) { //вставка
+
         }
 
         Long extractMax() { //извлечение и удаление максимума
