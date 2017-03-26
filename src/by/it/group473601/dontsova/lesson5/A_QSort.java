@@ -43,8 +43,13 @@ public class A_QSort {
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
+            if(start <= stop){
+                this.start = start;
+                this.stop = stop;
+            }else{
+                this.start = stop;
+                this.stop = start;
+            }
             //тут вообще-то лучше доделать конструктор на случай если
             //концы отрезков придут в обратном порядке
         }
@@ -52,7 +57,12 @@ public class A_QSort {
         @Override
         public int compareTo(Object o) {
             //подумайте, что должен возвращать компаратор отрезков
-            return 0;
+
+            if(((Segment)o).start>this.start)
+                return 1;
+            else if(((Segment)o).start<this.start)
+                return -1;
+            else return 0;
         }
     }
 
@@ -74,9 +84,19 @@ public class A_QSort {
             //читаем начало и конец каждого отрезка
             segments[i]=new Segment(scanner.nextInt(),scanner.nextInt());
         }
+
+        quicksort(segments,0,segments.length-1);
+
         //читаем точки
         for (int i = 0; i < n; i++) {
             points[i]=scanner.nextInt();
+            int j=0;
+            while(j<segments.length)
+            {
+                if(points[i]>=segments[j].start && points[i]<=segments[j].stop)
+                    result[i]++;
+                j++;
+            }
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
@@ -88,10 +108,53 @@ public class A_QSort {
         return result;
     }
 
+    private void quicksort(Segment[] numbers, int low, int high) {
+        if (low >= high)
+            return;
+        int i = low, j = high;
+        // Get the pivot element from the middle of the list
+        Segment pivot = numbers[low + (high-low)/2];
+
+        // Divide into two lists
+        while (i <= j) {
+            // If the current value from the left list is smaller than the pivot
+            // element then get the next element from the left list
+            while (numbers[i].compareTo(pivot)==-1) {
+                i++;
+            }
+            // If the current value from the right list is larger than the pivot
+            // element then get the next element from the right list
+            while (numbers[j].compareTo(pivot)==1){
+                j--;
+            }
+
+            // If we have found a value in the left list which is larger than
+            // the pivot element and if we have found a value in the right list
+            // which is smaller than the pivot element then we exchange the
+            // values.
+            // As we are done we can increase i and j
+            if (i <= j) {
+                exchange(numbers,i, j);
+                i++;
+                j--;
+            }
+        }
+        // Recursion
+        if (low < j)
+            quicksort(numbers,low, j);
+        if (i < high)
+            quicksort(numbers,i, high);
+    }
+
+    private void exchange(Segment[] numbers, int i, int j) {
+        Segment temp = numbers[i];
+        numbers[i] = numbers[j];
+        numbers[j] = temp;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/dontsova/lesson5/dataA.txt");
         A_QSort instance = new A_QSort();
         int[] result=instance.getAccessory(stream);
         for (int index:result){

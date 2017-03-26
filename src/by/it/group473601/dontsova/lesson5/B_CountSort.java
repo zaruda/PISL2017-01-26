@@ -32,7 +32,32 @@ public class B_CountSort {
         }
         //тут реализуйте логику задачи с применением сортировки подсчетом
 
-
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        for (int element : points)
+        {
+            if (element < min)
+            {
+                min = element;
+            }
+            if (element > max)
+            {
+                max = element;
+            }
+        }
+        int[] buckets = new int[max - min + 1];
+        for (int element : points)
+        {
+            buckets[element - min]++;
+        }
+        int arrayIndex = 0;
+        for (int i = 0; i < buckets.length; i++)
+        {
+            for (int j = buckets[i]; j > 0; j--)
+            {
+                points[arrayIndex++] = i + min;
+            }
+        }
 
 
 
@@ -43,7 +68,7 @@ public class B_CountSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/dontsova/lesson5/dataB.txt");
         B_CountSort instance = new B_CountSort();
         int[] result=instance.countSort(stream);
         for (int index:result){
