@@ -59,27 +59,28 @@ public class C_GreedyKnapsack {
             System.out.println(item);
         }
         System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
-        double result = 0;
-        int size = 0;
+        java.util.Arrays.sort(items);
+        double sum = 0;
+        int busySize = 0;
         for (int i = 0; i < items.length; i++) {
-            if (items[i].weight + size <= W) {
-                result += items[i].cost;
-                size += items[i].weight;
+            if (items[i].weight + busySize <= W) {
+                sum += items[i].cost;
+                busySize += items[i].weight;
             } else {
-                int emptyW = W - size;
+                int emptySize = W - busySize;
                 int cost = items[i].cost / items[i].weight;
-                result += emptyW * cost;
-                size += emptyW;
+                sum += emptySize * cost;
+                busySize += emptySize;
             }
         }
-        System.out.printf("Удалось собрать рюкзак на сумму %f\n", result);
-        return result;
+        System.out.printf("Удалось собрать рюкзак на сумму %f\n", sum);
+        return sum;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         long startTime = System.currentTimeMillis();
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/group473601/kalashynski/lesson02/greedyKnapsack.txt");
+        File f = new File(root + "by/it/group473601/kalashynski/lesson2/greedyKnapsack.txt");
         double costFinal = new C_GreedyKnapsack().calc(f);
         long finishTime = System.currentTimeMillis();
         System.out.printf("Общая стоимость %f (время %d)", costFinal, finishTime - startTime);
