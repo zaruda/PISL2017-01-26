@@ -38,54 +38,30 @@ import java.util.Scanner;
 public class C_HeapMax {
 
     private class MaxHeap {
-
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        //тут запишите ваше решение.
+        //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        public MaxHeap(){
+        int siftDown(int i) { //просеивание вверх
 
-        }
-        int siftUp(int i) { // просеивание вверх
-            while (heap.get(i) > heap.get((i - 1) / 2)) {
-                swap(i, (i - 1) / 2);
-                i = (i - 1) / 2;
-            }
             return i;
         }
 
-        int siftDown(int i) { // просеивание вниз
-            while (2 * i + 1 < heap.size()) {
-                int left = 2 * i + 1; // left
-                int right = 2 * i + 2; // right
-                int j = left;
-                if (right < heap.size() && heap.get(right) < heap.get(left)) {
-                    j = right;
-                }
-                if (heap.get(i) >= heap.get(j))
-                    break;
-                swap(i, j);
-                i = j;
-            }
+        int siftUp(int i) { //просеивание вниз
+
             return i;
         }
 
-        void insert(Long value) { // вставка
-            heap.add(value);
-            siftUp(heap.size()-1);
+        void insert(Long value) { //вставка
         }
 
-        Long extractMax() {
-            //Swap max(index=0) element and last element of the tree and then remove max element
-            swap(0, heap.size()-1);
-            Long result = heap.remove(heap.size()-1);
-            siftDown(0);
+        Long extractMax() { //извлечение и удаление максимума
+            Long result = null;
+
             return result;
         }
-
-        private void swap(int first, int second) {
-            Long tmp = heap.get(first);
-            heap.set(first, heap.get(second));
-            heap.set(second, tmp);
-        }
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
     }
 
     //эта процедура читает данные из файла, ее можно не менять.
@@ -116,7 +92,7 @@ public class C_HeapMax {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473602/kloster/lesson3/heapData.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson03/heapData.txt");
         C_HeapMax instance = new C_HeapMax();
         System.out.println("MAX="+instance.findMaxValue(stream));
     }

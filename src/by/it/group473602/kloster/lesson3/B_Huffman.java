@@ -2,62 +2,65 @@ package by.it.group473602.kloster.lesson3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.regex.Pattern;
 
+// Lesson 3. B_Huffman.
+// Восстановите строку по её коду и беспрефиксному коду символов.
+
+// В первой строке входного файла заданы два целых числа
+// kk и ll через пробел — количество различных букв, встречающихся в строке,
+// и размер получившейся закодированной строки, соответственно.
+//
+// В следующих kk строках записаны коды букв в формате "letter: code".
+// Ни один код не является префиксом другого.
+// Буквы могут быть перечислены в любом порядке.
+// В качестве букв могут встречаться лишь строчные буквы латинского алфавита;
+// каждая из этих букв встречается в строке хотя бы один раз.
+// Наконец, в последней строке записана закодированная строка.
+// Исходная строка и коды всех букв непусты.
+// Заданный код таков, что закодированная строка имеет минимальный возможный размер.
+//
+//        Sample Input 1:
+//        1 1
+//        a: 0
+//        0
+
+//        Sample Output 1:
+//        a
+
+
+//        Sample Input 2:
+//        4 14
+//        a: 0
+//        b: 10
+//        c: 110
+//        d: 111
+//        01001100100111
+
+//        Sample Output 2:
+//        abacabad
 
 public class B_Huffman {
 
     String decode(File file) throws FileNotFoundException {
-        return getDecodedString(getEncodedString(file), getCodes(file)); // 01001100100111
-    }
-
-    private Map<String, Character> getCodes (File file) throws FileNotFoundException {
-        Map<String, Character> codes = new TreeMap<>();
+        StringBuilder result=new StringBuilder();
+        //прочитаем строку для кодирования из тестового файла
         Scanner scanner = new Scanner(file);
-        String line;
-        while (scanner.hasNext()) {
-            line = scanner.nextLine();
-            if (Pattern.matches("[a-zA-Z]{1}: [0-1]{1,}", line))
-                codes.put(line.split(": ")[1], line.split(": ")[0].charAt(0));
-        }
-        scanner.close();
-        return codes;
-    }
+        Integer count = scanner.nextInt();
+        Integer length = scanner.nextInt();
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        //тут запишите ваше решение
 
 
-    private String getEncodedString(File file) throws FileNotFoundException {
-        Scanner scanner = new Scanner(file);
-        String line = new String();
-        while(scanner.hasNext()) {
-            line=scanner.nextLine();
-            if(Pattern.matches("[0-1]{1,}", line))
-                break;
-        }
-        scanner.close();
-        return line;
-    }
 
-    private String getDecodedString(String encodedString, Map<String, Character> charecters) {
-        StringBuilder currentCode = new StringBuilder();
-        StringBuilder result = new StringBuilder();
-        for(int i=0;i<14;i++) {
-            currentCode.append(encodedString.charAt(i));
-            if(encodedString.charAt(i)=='0') {
-                result.append(charecters.get(currentCode.toString()));
-                currentCode = new StringBuilder();
-            }
-        }
-        result.append(charecters.get(currentCode.toString()));
-        return result.toString();
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        return result.toString(); //01001100100111
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        File f = new File(root + "by/it/group473602/kloster/lesson3/encodeHuffman.txt");
+        File f = new File(root + "by/it/a_khmelov/lesson03/encodeHuffman.txt");
         B_Huffman instance = new B_Huffman();
         String result = instance.decode(f);
         System.out.println(result);
