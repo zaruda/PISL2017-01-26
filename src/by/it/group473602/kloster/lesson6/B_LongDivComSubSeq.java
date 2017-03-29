@@ -1,4 +1,4 @@
-package by.it.group473602.kloster.lesson6;
+package by.it.group473602.kloster.lesson06;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +53,7 @@ public class B_LongDivComSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473602/Kloster/lesson6/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
         System.out.print(result);

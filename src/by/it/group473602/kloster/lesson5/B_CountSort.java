@@ -1,4 +1,4 @@
-package by.it.group473602.kloster.lesson5;
+package by.it.group473602.kloster.lesson05;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -43,7 +43,7 @@ public class B_CountSort {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473602/Kloster/lesson5/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson05/dataB.txt");
         B_CountSort instance = new B_CountSort();
         int[] result=instance.countSort(stream);
         for (int index:result){
