@@ -58,8 +58,7 @@ public class B_Sheduler {
         Arrays.sort(events, (o1, o2) -> (o1.stop-o2.stop));
 
         int currentFrom=from;
-        for (Event element:
-                events) {
+        for (Event element:  events) {
             if (element.start>=currentFrom && element.stop<=to){
                 result.add(element);
                 currentFrom=element.stop;
