@@ -3,6 +3,7 @@ package by.it.group473601.gorbachik.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -30,7 +31,8 @@ import java.util.Scanner;
 */
 
 
-public class C_QSortOptimized {
+public class C_QSortOptimized  {
+    private static final Random RANDOM = new Random();
 
     //отрезок
     private class Segment  implements Comparable{
@@ -59,7 +61,7 @@ public class C_QSortOptimized {
         Segment[] segments=new Segment[n];
         //число точек
         int m = scanner.nextInt();
-        int[] points=new int[m];
+        int[] points=new int[n];
         int[] result=new int[m];
 
         //читаем сами отрезки
@@ -73,10 +75,63 @@ public class C_QSortOptimized {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
+        qSort(segments, 0 , segments.length - 1);
+        binarySearch(result,segments,points);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private void binarySearch(int[] result, Segment[] segments, int[] points){
+        for (int i = 0; i < points.length; i++) {
+            int left=0;
+            int right=segments.length-1;
+            while(left<=right) {
+                int middle=(left+right)/2;
+
+                if(segments[middle].start<=points[i]&&segments[middle].stop>=points[i]) {
+                    result[i]++;
+                    break;
+                }
+
+                else {
+                    if(segments[middle].start>points[i]) {
+                        left=middle+1;
+                    }
+                    else {
+                        right=middle-1;
+                    }
+                }
+
+            }
+
+        }
+    }
+
+    private void swap(Object[] array, int i, int j) {
+        Object tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    private int partition(Segment[] array, int begin, int end) {
+        int index = begin + RANDOM.nextInt(end - begin + 1);
+        Object pivot = array[index];
+        swap(array, index, end);
+        for (int i = index = begin; i < end; ++ i) {
+            if (array[i].compareTo(pivot) <= 0) {
+                swap(array, index++, i);
+            }
+        }
+        swap(array, index, end);
+        return (index);
+    }
+
+    private void qSort(Segment[] array, int begin, int end) {
+        if (end > begin) {
+            int index = partition(array, begin, end);
+            qSort(array, begin, index - 1);
+            qSort(array, index + 1,  end);
+        }
     }
 
 
