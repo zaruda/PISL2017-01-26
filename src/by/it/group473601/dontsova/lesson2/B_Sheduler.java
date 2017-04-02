@@ -56,14 +56,12 @@ public class B_Sheduler {
 
     List<Event> calcStartTimes(Event[] events, int from, int to) {
         //events - события которые нужно распределить в аудитории
-        //в период [from, int] (включительно).
+        //в период [from, to] (включительно).
         //оптимизация проводится по наибольшему числу непересекающихся событий.
         //начало и конец событий могут совпадать.
         List<Event> result;
         result = new ArrayList<>();
         //ваше решение.
-
-
         Arrays.sort(events);
         for(Event i:events)
         {
@@ -77,10 +75,6 @@ public class B_Sheduler {
             }
             //else{}
         }
-
-
-
-
         return result;                        //вернем итог
     }
 }

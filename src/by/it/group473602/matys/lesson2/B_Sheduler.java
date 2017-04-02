@@ -30,12 +30,13 @@ public class B_Sheduler {
 
 	@Override
 	public int compareTo(Event compare) {
-	    if (compare.stop > this.stop)
+	    if (compare.stop > this.stop) {
 		return -1;
-	    else if (compare.stop < this.stop)
+	    } else if (compare.stop < this.stop) {
 		return 1;
-	    else
+	    } else {
 		return 0;
+	    }
 	}
     }
 
@@ -62,13 +63,13 @@ public class B_Sheduler {
 	List<Event> result;
 	result = new ArrayList<>();
 	// ваше решение.
-	
+
 	Arrays.sort(events);
 
 	int startNextEvent = from;
-	for(int i=0;i< events.length;i++) {
+	for (int i = 0; i < events.length; i++) {
 	    Event currentEvent = events[i];
-	    if(currentEvent.start >= startNextEvent && currentEvent.stop<=to){
+	    if (currentEvent.start >= startNextEvent && currentEvent.stop <= to) {
 		startNextEvent = currentEvent.stop;
 		result.add(currentEvent);
 	    }

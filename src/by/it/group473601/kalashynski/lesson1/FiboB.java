@@ -1,4 +1,4 @@
-package by.it.group473601.kalashynski.lesson01;
+package by.it.group473601.kalashynski.lesson1;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
