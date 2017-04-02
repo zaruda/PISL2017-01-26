@@ -3,6 +3,7 @@ package by.it.group473601.gorbachik.lesson05;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.Random;
 import java.util.Scanner;
 
 /*
@@ -37,16 +38,49 @@ import java.util.Scanner;
 
 public class A_QSort {
 
+    public static final Random RND = new Random();
+
+    private void swap(Object[] array, int i, int j) {
+        Object tmp = array[i];
+        array[i] = array[j];
+        array[j] = tmp;
+    }
+
+    private int partition(Segment[] array, int begin, int end) {
+        int index = begin + RND.nextInt(end - begin + 1);
+        Object pivot = array[index];
+        swap(array, index, end);
+        for (int i = index = begin; i < end; ++ i) {
+            if (array[i].compareTo(pivot) <= 0) {
+                swap(array, index++, i);
+            }
+        }
+        swap(array, index, end);
+        return (index);
+    }
+
+    private void qSort(Segment[] array, int begin, int end) {
+        if (end > begin) {
+            int index = partition(array, begin, end);
+            qSort(array, begin, index - 1);
+            qSort(array, index + 1,  end);
+        }
+    }
+
     //отрезок
     private class Segment  implements Comparable{
         int start;
         int stop;
 
         Segment(int start, int stop){
-            this.start = start;
-            this.stop = stop;
-            //тут вообще-то лучше доделать конструктор на случай если
-            //концы отрезков придут в обратном порядке
+            if (start > stop && stop < start) {
+                this.start = stop;
+                this.stop = start;
+            }
+            else {
+                this.start = start;
+                this.stop = stop;
+            }
         }
 
         @Override
@@ -81,8 +115,18 @@ public class A_QSort {
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
 
+        qSort(segments, 0, segments.length-1);
 
+        for (int i = 0; i < n; i++) {
 
+            for (int j = 0; j < n; j++) {
+                //читаем начало и конец каждого отрезка
+                if (points[i]>=segments[j].start&&points[i]<=segments[j].stop){
+                    result[i]++;
+                }
+            }
+
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
