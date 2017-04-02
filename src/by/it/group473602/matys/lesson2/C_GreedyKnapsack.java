@@ -37,12 +37,13 @@ public class C_GreedyKnapsack {
 	public int compareTo(Item compare) {
 	    double currentCostDelWeight = this.cost / this.weight;
 	    double compareCostDelWeight = compare.cost / compare.weight;
-	    if (compareCostDelWeight > currentCostDelWeight)
+	    if (compareCostDelWeight > currentCostDelWeight) {
 		return 1;
-	    else if (compareCostDelWeight < currentCostDelWeight)
+	    } else if (compareCostDelWeight < currentCostDelWeight) {
 		return -1;
-	    else
+	    } else {
 		return 0;
+	    }
 	}
     }
 
@@ -57,14 +58,13 @@ public class C_GreedyKnapsack {
 
 	input.close();
 
-	
 	// покажем предметы
 	for (Item item : items) {
 	    System.out.println(item);
 	}
 	System.out.printf("Всего предметов: %d. Рюкзак вмещает %d кг.\n", n, W);
 
-	//Sort our items
+	// Sort our items
 	Arrays.sort(items);
 	double result = 0;
 

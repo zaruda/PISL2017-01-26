@@ -47,7 +47,7 @@ public class C_GetInversions {
         return merge(sort(left), sort(right));
     }
     //слияние двух массивов в один отсортированный
-    public static int[] merge(int[] left,int right[]){
+    public static int[] merge(int[] left, int right[]){
         int sizeResult = left.length + right.length;
         int[] result = new int[sizeResult + 1];
         int iLeft = 0;

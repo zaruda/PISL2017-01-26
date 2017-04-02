@@ -31,20 +31,13 @@ public class A_VideoRegistrator {
                                               //C*(n log n) + C1*n = O(n log n)
 
         while(i<events.length){                 //пока есть незарегистрированные события
-            double start=events[i];
-            result.add(start);
-            double finish=start+workDuration;
-            i++;
-            while(i<events.length && events[i]<=finish)
-                i++;
+            double start=events[i];             //получим одно событие по левому краю
+            result.add(start);                  //и запомним время старта видеокамеры
+            double finish=start+workDuration;   //вычислим момент окончания работы видеокамеры
+
+            while(i<events.length && events[i]<=finish)//и теперь пропустим все покрываемые события
+                i++;                                    //за время до конца работы, увеличивая индекс
         }
-                                                //получим одно событие по левому краю
-                                                //и запомним время старта видеокамеры
-                                                //вычислим момент окончания работы видеокамеры
-                                                //и теперь пропустим все покрываемые события
-                                                //за время до конца работы, увеличивая индекс
-
-
 
         return result;                        //вернем итог
     }

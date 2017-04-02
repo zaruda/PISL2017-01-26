@@ -1,6 +1,5 @@
 package by.it.group473602.matys.lesson2;
 
-import java.awt.Event;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,17 +29,16 @@ public class A_VideoRegistrator {
     List<Double> calcStartTimes(double[] events, double workDuration) {
 	// events - события которые нужно зарегистрировать
 	// timeWorkDuration время работы видеокамеры после старта
-	List<Double> result;
-	result = new ArrayList<>();
-	int i = 0;
+	List<Double> result = new ArrayList<>();
+	int i = 1;
 
 	Arrays.sort(events);
+	// Add first switch on of DVR
+	result.add(events[i]);
 
-	result.add(events[i++]);
-	
-	while(i<events.length){
+	while (i < events.length) {
 	    Double startWork = events[i];
-	    if((result.get(result.size()-1)+workDuration)<startWork) {
+	    if ((result.get(result.size() - 1) + workDuration) < startWork) {
 		result.add(startWork);
 	    }
 	    i++;
