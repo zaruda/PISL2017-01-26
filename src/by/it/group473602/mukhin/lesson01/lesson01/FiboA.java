@@ -1,4 +1,4 @@
-package by.it.group473602.mukhin.lesson01;
+package by.it.group473602.mukhin.lesson01.lesson01;
 
 import java.math.BigInteger;
 
@@ -27,9 +27,20 @@ public class FiboA {
 
 
     private int calc(int n) {
-        //здесь простейший вариант, в котором код совпадает с мат.определением чисел Фибоначчи
-        //время O(2^n)
-        return 0;
+        // здесь простейший вариант, в котором код совпадает с мат.определением
+        // чисел Фибоначчи
+        // время O(2^n)
+
+        int firstNumber = 1;
+        int secondNumber = 1;
+        int sumFib = 0;
+
+        for(int i = 2; i < n; i++){
+            sumFib = firstNumber + secondNumber;
+            firstNumber = secondNumber;
+            secondNumber = sumFib;
+        }
+        return sumFib;
     }
 
 
@@ -39,7 +50,10 @@ public class FiboA {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
 
-        return BigInteger.ZERO;
+        if (n <= 0) return BigInteger.ZERO;
+        if (n < 3) return BigInteger.ONE;
+        else return slowA(n - 1).add(slowA(n - 2));
+
     }
 
 
