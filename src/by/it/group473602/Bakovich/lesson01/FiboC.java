@@ -6,6 +6,7 @@ package by.it.group473602.Bakovich.lesson01;
  * время расчета должно быть не более 2 секунд
  */
 import java.util.ArrayList;
+import java.util.List;
 
 public class FiboC {
 
@@ -17,8 +18,8 @@ public class FiboC {
 
     public static void main(String[] args) {
         FiboC fibo = new FiboC();
-        int n = 999999999;
-        int m = 321;
+        int n =10;
+        int m = 2;
         System.out.printf("fasterC(%d)=%d \n\t time=%d \n\n", n, fibo.fasterC(n, m), fibo.time());
     }
 
@@ -27,19 +28,18 @@ public class FiboC {
         //вам потребуется дополнительный поиск информации
         //см. период Пизано
 
-        ArrayList<Long> pzn = new ArrayList();
-        pzn.add((long)0);
-        pzn.add((long)1);
-        for(int i = 2; i < m * 6; i++){
+        List<Integer> pzn = new ArrayList<Integer>();
+        pzn.add(0);
+        pzn.add(1);
+        for(int i = 2; i < n * 6; i++){
             pzn.add((pzn.get(i - 1) + pzn.get(i - 2)) % m);
             if(pzn.get(i) == 1 && pzn.get(i-1) == 0){
                 break;
             }
         }
-        long period = pzn.size() - 2;
-        int answ = (int)(n&period);
+        int period = pzn.size() - 2;
+        int answ = (int)(n%period);
         return pzn.get(answ);
-    //    return 0L;
     }
 }
 
