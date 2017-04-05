@@ -31,18 +31,18 @@ public class FiboA {
         //время O(2^n)
         int fb1 = 1;
         int fb2 = 1;
-        int fb_sum = 0;
+        int fbSum = 0;
         int i = 2;
 
         while(i < n)
         {
-            fb_sum = fb1 + fb2;
+            fbSum = fb1 + fb2;
             fb1 = fb2;
-            fb2 = fb_sum;
+            fb2 = fbSum;
             i++;
         }
 
-        return fb_sum;
+        return fbSum;
     }
 
 
@@ -52,7 +52,7 @@ public class FiboA {
         //в котором код совпадает с мат.определением чисел Фибоначчи
         //время O(2^n)
         if(n == 1 || n==2) return BigInteger.ONE;
-        return (slowA(n-1).add(slowA(n-2)));
+        return (slowA(n-1).add(slowA(n-2)));//ternary operator
     }
 
 

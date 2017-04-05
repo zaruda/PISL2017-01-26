@@ -27,7 +27,7 @@ public class FiboB {
     BigInteger fastB(Integer n) {
         //здесь нужно реализовать вариант с временем O(n) и памятью O(n)
         if(n == 1 || n==2) return BigInteger.ONE;
-        ArrayList<BigInteger> fbArr = new ArrayList<BigInteger>(n+1);
+        ArrayList<BigInteger> fbArr = new ArrayList<BigInteger>();
         fbArr.add(BigInteger.ZERO);
         fbArr.add(BigInteger.ONE);
         fbArr.add(BigInteger.ONE);
