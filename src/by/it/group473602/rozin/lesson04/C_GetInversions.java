@@ -51,16 +51,12 @@ public class C_GetInversions {
 
 
         mergeSort(a, 0, a.length - 1);
-
+        //  System.out.println(inversion);
         result = countInversion;
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
-
-    private int countInversion = 0;
 
     int[] merge(int[] left, int[] right) {
         int max = left.length + right.length;
@@ -88,6 +84,9 @@ public class C_GetInversions {
         return result;
     }
 
+    private int countInversion = 0;
+
+
     int[] mergeSort(int[] arr, int left, int right) {
         int[] result = new int[1];
         int middle = (int) (left + right) / 2;
@@ -98,6 +97,7 @@ public class C_GetInversions {
             return result;
         }
     }
+
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
