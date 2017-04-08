@@ -44,9 +44,71 @@ public class A_EditDist {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-        int result = 0;
+        int[][] array = new int [one.length()][two.length()];
+        int max = 101;
+        for(int i = 0; i < one.length(); i++){
+            for (int j = 0; j < two.length(); j++){
+                array[i][j] = max;
+            }
+        }
+
+        int result = -1;
+        for(int i = 0; i < one.length(); i++){
+            for (int j = 0; j < two.length(); j++){
+                result = editDistance(i, j, array, max, one, two);
+            }
+        }
+
+
+
+
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    int editDistance(int i, int j, int[][] array, int max, String one, String two) {
+
+        if (array[i][j] == max){
+            if (i == 0){
+                array[i][j] = j;
+            }
+            else {
+                if (j == 0) {
+                    array[i][j] = i;
+                }
+                else {
+                    int insert = editDistance(i, j - 1, array, max, one, two) + 1;
+                    int delete = editDistance(i - 1, j, array, max, one, two) + 1;
+                    int substitute = editDistance(i - 1, j - 1, array, max, one, two) + difference(one.charAt(i), two.charAt(j));
+
+                    int min = -1;
+                    if (insert < delete){
+                        min = insert;
+                    }
+                    else {
+                        min = delete;
+                    }
+                    if (min > substitute){
+                        min = substitute;
+                    }
+                    array[i][j] = min;
+                }
+            }
+
+        }
+
+        return array[i][j];
+    }
+    int difference(char a, char b){
+        if (a == b) {
+            System.out.println("==");
+            return 0;
+        }
+        else {
+            System.out.println("!=");
+            return 1;
+        }
     }
 
 
