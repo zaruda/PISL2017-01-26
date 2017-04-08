@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 Необходимо:
     Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
-    Итерационно вычислить расстояние редактирования двух данных непустых строк
+    Рекурсивно вычислить расстояние редактирования двух данных непустых строк
 
     Sample Input 1:
     ab
@@ -37,47 +37,50 @@ import java.util.Scanner;
 
 */
 
-public class B_EditDist {
+public class A_EditDist {
+
+    public static int naiveEditDistance(String sourceString, String destinationString) {
+	int matchDist;
+	int insertDist;
+	int deleteDist;
+	int swapDist;
+
+	if (sourceString.length() == 0) {
+	    return destinationString.length();
+	} else if (destinationString.length() == 0) {
+	    return sourceString.length();
+	} else {
+	    matchDist = naiveEditDistance(sourceString.substring(1), destinationString.substring(1));
+	    if (sourceString.charAt(0) != destinationString.charAt(0))
+		matchDist++;
+
+	    insertDist = naiveEditDistance(sourceString.substring(1), destinationString) + 1;
+	    deleteDist = naiveEditDistance(sourceString, destinationString.substring(1)) + 1;
+
+	    if (sourceString.length() > 1 && destinationString.length() > 1
+		    && sourceString.charAt(0) == destinationString.charAt(1)
+		    && sourceString.charAt(1) == destinationString.charAt(0)) {
+		swapDist = naiveEditDistance(sourceString.substring(2), destinationString.substring(2)) + 1;
+	    } else {
+		swapDist = Integer.MAX_VALUE;
+	    }
+
+	    return Math.min(matchDist, Math.min(insertDist, Math.min(deleteDist, swapDist)));
+	}
+    }
 
     int getDistanceEdinting(String firstString, String secondString) {
-	int m = firstString.length(), n = secondString.length();
-	int[] firstDifference;
-	int[] secondDifference = new int[n + 1];
-
-	for (int i = 0; i <= n; i++)
-	    secondDifference[i] = i;
-
-	for (int i = 1; i <= m; i++) {
-	    firstDifference = secondDifference;
-	    secondDifference = new int[n + 1];
-	    for (int j = 0; j <= n; j++) {
-		if (j == 0) {
-		    secondDifference[j] = i;
-		} else {
-		    int cost = (firstString.charAt(i - 1) != secondString.charAt(j - 1)) ? 1 : 0;
-		    if (secondDifference[j - 1] < firstDifference[j]
-			    && secondDifference[j - 1] < firstDifference[j - 1] + cost) {
-			secondDifference[j] = secondDifference[j - 1] + 1;
-		    } else if (firstDifference[j] < firstDifference[j - 1] + cost) {
-			secondDifference[j] = firstDifference[j] + 1;
-		    } else {
-			secondDifference[j] = firstDifference[j - 1] + cost;
-		    }
-		}
-	    }
-	}
-	return secondDifference[n];
+	return naiveEditDistance(firstString, secondString);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 	String root = System.getProperty("user.dir") + "/src/";
 	InputStream stream = new FileInputStream(root + "by/it/group473602/matys/lesson7/dataABC.txt");
-	B_EditDist instance = new B_EditDist();
+	A_EditDist instance = new A_EditDist();
 	Scanner scanner = new Scanner(stream);
 	System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
 	System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
 	System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
 	scanner.close();
     }
-
 }
