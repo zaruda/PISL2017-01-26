@@ -34,29 +34,42 @@ Sample Output 3:
 
 public class C_Stairs {
 
-    int getMaxSum(InputStream stream ) {
+    int getMaxSum(InputStream stream) {
         Scanner scanner = new Scanner(stream);
-        int n=scanner.nextInt();
-        int stairs[]=new int[n];
-        for (int i = 0; i < n; i++) {
-            stairs[i]=scanner.nextInt();
+        int count = scanner.nextInt();
+        int stairs[] = new int[count];
+        for (int i = 0; i < count; i++) {
+            stairs[i] = scanner.nextInt();
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        int result = 0;
 
+        int[] maxSum = new int[count + 1];
+        for (int i = 0; i < count + 1; i++) {
+            maxSum[i] = 0;
+        }
+        for (int i = 1; i < count + 1; i++) {
+            maxSum[i] = max(maxSum[i], maxSum[i - stairs[i - 1]] + stairs[i - 1]);
+        }
 
-
+        int result = maxSum[count];
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int max(int number1, int number2) {
+        if (number1 > number2) {
+            return number1;
+        } else {
+            return number2;
+        }
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/group473601/zinkevich/lesson09/dataC.txt");
         C_Stairs instance = new C_Stairs();
-        int res=instance.getMaxSum(stream);
+        int res = instance.getMaxSum(stream);
         System.out.println(res);
     }
 
