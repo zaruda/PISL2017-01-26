@@ -28,20 +28,45 @@ Sample Output:
 
 public class B_Knapsack {
 
-    int getMaxWeight(InputStream stream ) {
+    int getMaxWeight(InputStream stream) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         Scanner scanner = new Scanner(stream);
-        int w=scanner.nextInt();
-        int n=scanner.nextInt();
-        int gold[]=new int[n];
-        for (int i = 0; i < n; i++) {
-            gold[i]=scanner.nextInt();
+        int weight = scanner.nextInt();
+        int count = scanner.nextInt();
+        int gold[] = new int[count];
+        for (int i = 0; i < count; i++) {
+            gold[i] = scanner.nextInt();
         }
 
+        int[][] maxWeight = new int[weight + 1][count + 1];
+        for (int i = 0; i < weight + 1; i++) {
+            maxWeight[i][0] = 0;
+        }
+        for (int i = 0; i < count + 1; i++) {
+            maxWeight[0][i] = 0;
+        }
 
-        int result = 0;
+        for (int i = 1; i < count + 1; i++) {
+            for (int w = 1; w < weight + 1; w++) {
+                maxWeight[w][i] = maxWeight[w][i - 1];
+                if (gold[i - 1] <= w) {
+                    maxWeight[w][i] = max(maxWeight[w][i], maxWeight[w - gold[i - 1]][i - 1] + gold[i - 1]);
+                }
+            }
+        }
+
+        int result = maxWeight[weight][count];
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    int max(int number1, int number2) {
+        if (number1 > number2) {
+            return number1;
+        } else {
+            return number2;
+        }
     }
 
 
@@ -49,7 +74,7 @@ public class B_Knapsack {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/group473601/zinkevich/lesson09/dataB.txt");
         B_Knapsack instance = new B_Knapsack();
-        int res=instance.getMaxWeight(stream);
+        int res = instance.getMaxWeight(stream);
         System.out.println(res);
     }
 
