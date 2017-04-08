@@ -43,25 +43,20 @@ public class A_EditDist {
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-        int[][] array = new int [one.length()][two.length()];
+        int[][] array = new int [one.length() + 1][two.length() + 1];
         int max = 101;
-        for(int i = 0; i < one.length(); i++){
-            for (int j = 0; j < two.length(); j++){
+        for(int i = 0; i < one.length() + 1; i++){
+            for (int j = 0; j < two.length() + 1; j++){
                 array[i][j] = max;
             }
         }
 
         int result = -1;
-        for(int i = 0; i < one.length(); i++){
-            for (int j = 0; j < two.length(); j++){
+        for(int i = 0; i < one.length() + 1; i++){
+            for (int j = 0; j < two.length() + 1; j++){
                 result = editDistance(i, j, array, max, one, two);
             }
         }
-
-
-
-
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
@@ -79,38 +74,37 @@ public class A_EditDist {
                 }
                 else {
                     int insert = editDistance(i, j - 1, array, max, one, two) + 1;
-                    int delete = editDistance(i - 1, j, array, max, one, two) + 1;
-                    int substitute = editDistance(i - 1, j - 1, array, max, one, two) + difference(one.charAt(i), two.charAt(j));
+                    int delete = editDistance(i - 1 , j, array, max, one, two) + 1;
+                    int substitute = editDistance(i - 1 , j - 1, array, max, one, two) + difference(one.charAt(i-1), two.charAt(j-1));
 
-                    int min = -1;
-                    if (insert < delete){
-                        min = insert;
-                    }
-                    else {
-                        min = delete;
-                    }
-                    if (min > substitute){
-                        min = substitute;
-                    }
-                    array[i][j] = min;
+                    array[i][j] = min(insert, delete, substitute);
                 }
             }
-
         }
-
         return array[i][j];
     }
+
+    int min(int number1, int number2, int number3) {
+        int min = -1;
+        if (number1 < number2) {
+            min = number1;
+        } else {
+            min = number2;
+        }
+        if (min > number3) {
+            min = number3;
+        }
+        return min;
+    }
+
     int difference(char a, char b){
         if (a == b) {
-            System.out.println("==");
             return 0;
         }
         else {
-            System.out.println("!=");
             return 1;
         }
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
