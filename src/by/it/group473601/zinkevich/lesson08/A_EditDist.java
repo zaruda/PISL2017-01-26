@@ -43,12 +43,68 @@ public class A_EditDist {
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+        int[][] array = new int [one.length() + 1][two.length() + 1];
+        int max = 101;
+        for(int i = 0; i < one.length() + 1; i++){
+            for (int j = 0; j < two.length() + 1; j++){
+                array[i][j] = max;
+            }
+        }
 
-        int result = 0;
+        int result = -1;
+        for(int i = 0; i < one.length() + 1; i++){
+            for (int j = 0; j < two.length() + 1; j++){
+                result = editDistance(i, j, array, max, one, two);
+            }
+        }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
+    int editDistance(int i, int j, int[][] array, int max, String one, String two) {
+
+        if (array[i][j] == max){
+            if (i == 0){
+                array[i][j] = j;
+            }
+            else {
+                if (j == 0) {
+                    array[i][j] = i;
+                }
+                else {
+                    int insert = editDistance(i, j - 1, array, max, one, two) + 1;
+                    int delete = editDistance(i - 1 , j, array, max, one, two) + 1;
+                    int substitute = editDistance(i - 1 , j - 1, array, max, one, two) + difference(one.charAt(i-1), two.charAt(j-1));
+
+                    array[i][j] = min(insert, delete, substitute);
+                }
+            }
+        }
+        return array[i][j];
+    }
+
+    int min(int number1, int number2, int number3) {
+        int min = -1;
+        if (number1 < number2) {
+            min = number1;
+        } else {
+            min = number2;
+        }
+        if (min > number3) {
+            min = number3;
+        }
+        return min;
+    }
+
+    int difference(char a, char b){
+        if (a == b) {
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";

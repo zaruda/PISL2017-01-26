@@ -53,10 +53,90 @@ public class C_EditDist {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
+        int[][] array = new int[one.length() + 1][two.length() + 1];
+
+        for (int i = 0; i < one.length() + 1; i++) {
+            array[i][0] = i;
+        }
+        for (int j = 0; j < two.length() + 1; j++) {
+            array[0][j] = j;
+        }
+
+        for (int i = 0; i < one.length(); i++) {
+            for (int j = 0; j < two.length(); j++) {
+                int coef = difference(one.charAt(i), two.charAt(j));
+                array[i + 1][j + 1] = min(array[i - 1 + 1][j + 1] + 1, array[i + 1][j - 1 + 1] + 1, array[i - 1 + 1][j - 1 + 1] + coef);
+            }
+        }
+
+        String revertResult = "";
+        int i = one.length();
+        int j = two.length();
+        while (i >= 1) {
+            while (j >= 1) {
+
+                int delete = array[i - 1][j];
+                int insert = array[i][j - 1];
+                int substitute = array[i - 1][j - 1];
+                int min = min(delete, insert, substitute);
+
+                int coef = difference(one.charAt(i - 1), two.charAt(j - 1));
+
+                if (min == substitute) {
+                    if (coef == 0) {
+                        revertResult += "#,";
+                    } else {
+                        revertResult += "~" + two.charAt(j - 1) + ",";
+                    }
+                    i--;
+                    j--;
+                }
+                if (min == delete) {
+                    revertResult += "-" + one.charAt(i - 1) + ",";
+                    i--;
+                } else {
+                    if (min == insert) {
+                        revertResult += "+" + two.charAt(j - 1) + ",";
+                        j--;
+                    }
+
+                }
+
+            }
+        }
+
+        String[] arrayResult = revertResult.split(",");
         String result = "";
+        for (int k = arrayResult.length - 1; k >= 0; k--) {
+            result += arrayResult[k] + ",";
+        }
+
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
+
+    int difference(char a, char b) {
+        if (a == b) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    int min(int number1, int number2, int number3) {
+        int min = -1;
+        if (number1 < number2) {
+            min = number1;
+        } else {
+            min = number2;
+        }
+        if (min > number3) {
+            min = number3;
+        }
+        return min;
+    }
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
