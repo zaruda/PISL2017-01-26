@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 Необходимо:
     Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
-    Рекурсивно вычислить расстояние редактирования двух данных непустых строк
+    Итерационно вычислить расстояние редактирования двух данных непустых строк
 
     Sample Input 1:
     ab
@@ -37,55 +37,29 @@ import java.util.Scanner;
 
 */
 
-public class A_EditDist {
+public class B_EditDist {
 
 
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int result = 0;
 
 
-        int oneLength = one.length();
-        int twoLength = two.length();
 
-        int[] levensteinDistanceOne;
-        int[] levensteinDistanceTwo = new int[twoLength + 1];
-
-        for(int i = 0; i <= twoLength;i ++) {
-            levensteinDistanceTwo[i] = i;
-        }
-
-        for(int i = 1; i <= oneLength; i++){
-            levensteinDistanceOne = levensteinDistanceTwo;
-            levensteinDistanceTwo = new int[twoLength + 1];
-            for(int j = 0; j <= twoLength; j++){
-                if(j == 0) levensteinDistanceTwo[j] = i;
-                else {
-                    int cost = (one.charAt(i - 1) != two.charAt(j - 1)) ? 1 : 0;
-                    if(levensteinDistanceTwo[j - 1] < levensteinDistanceOne[j] && levensteinDistanceTwo[j - 1] < levensteinDistanceOne[j - 1] + cost)
-                        levensteinDistanceTwo[j] = levensteinDistanceTwo[j - 1] + 1;
-                    else if(levensteinDistanceOne[j] < levensteinDistanceOne[j - 1] + cost)
-                        levensteinDistanceTwo[j] = levensteinDistanceOne[j] + 1;
-                    else
-                        levensteinDistanceTwo[j] = levensteinDistanceOne[j - 1] + cost;
-                }
-            }
-        }
-
-
-        int result = levensteinDistanceTwo[twoLength];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
 
 
+
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
         InputStream stream = new FileInputStream(root + "by/it/group473601/borovsky/lesson01/lesson08/dataABC.txt");
-        A_EditDist instance = new A_EditDist();
+        B_EditDist instance = new B_EditDist();
         Scanner scanner = new Scanner(stream);
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));
     }
-}
 
+}
