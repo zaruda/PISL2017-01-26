@@ -79,8 +79,6 @@ public class C_EditDist {
 
         while(a >= 1){
             while(b >= 1){
-                int cost = getDiff(one.charAt(a - 1), two.charAt(b - 1));
-
                 int needToBeInsert = levensteignDistances[a][b - 1];
                 int needToBeDelete = levensteignDistances[a - 1][b];
                 int needToBeReplace = levensteignDistances[a - 1][b - 1];
@@ -90,6 +88,7 @@ public class C_EditDist {
                         needToBeReplace);
 
                 if (minimum == needToBeReplace){
+                    int cost = getDiff(one.charAt(a - 1), two.charAt(b - 1));
                     switch (cost){
                         case 0:{
                             result+="#,";
@@ -112,14 +111,6 @@ public class C_EditDist {
                 }
             }
         }
-
-        String[] arrayResult = result.split(",");
-        result = "";
-                for (int k = arrayResult.length - 1; k >= 0; k--) {
-                        result += arrayResult[k] + ",";
-                    }
-
-        //result = result.substring(0,result.length() - 1);
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

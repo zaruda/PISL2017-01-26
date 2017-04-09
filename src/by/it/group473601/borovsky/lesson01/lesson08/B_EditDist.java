@@ -43,11 +43,63 @@ public class B_EditDist {
     int getDistanceEdinting(String one, String two) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
+        int[][] levensteignDistances = new int [one.length() + 1][two.length() + 1];
+               int roundInfinity = 32765;
+               for(int i = 0; i < one.length() + 1; i++) {
+                   for (int j = 0; j < two.length() + 1; j++) {
+                       levensteignDistances[i][j] = roundInfinity;
+                   }
+               }
+
+           for(int i = 0; i < one.length() + 1; i++) {
+               for (int j = 0; j < two.length() + 1; j++) {
+                       result = editDistTD(i, j, levensteignDistances, roundInfinity, one, two);
+               }
+
+           }
 
 
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+            //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private static int editDistTD(int i, int j, int[][] levensteignDistances, int infinity, String one, String two) {
+
+        if (levensteignDistances[i][j] == infinity){
+            if (i == 0){
+                levensteignDistances[i][j] = j;
+            }
+            else {
+                if (j == 0) {
+                    levensteignDistances[i][j] = i;
+                }
+                else {
+                    int needToBeInsert = editDistTD(i, j - 1, levensteignDistances, infinity, one, two) + 1;
+                    int needToBeDelete = editDistTD(i - 1 , j, levensteignDistances, infinity, one, two) + 1;
+                    int needToBeReplace = editDistTD(i - 1 , j - 1, levensteignDistances, infinity, one, two) + getDiff(one.charAt(i-1), two.charAt(j-1));
+
+                    levensteignDistances[i][j] = getMin(needToBeInsert, needToBeDelete, needToBeReplace);
+                }
+            }
+        }
+        return levensteignDistances[i][j];
+    }
+
+    private static int getDiff(char one, char two){
+        return one != two ? 1: 0;
+    }
+
+    private static int getMin(int one, int two, int three){
+        int min;
+        if(two > one){
+            min = one;
+        }else{
+            min = two;
+        }
+        if(three < min){
+            min = three;
+        }
+        return min;
     }
 
 
