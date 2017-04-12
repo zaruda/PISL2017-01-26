@@ -1,4 +1,4 @@
-package by.it.group473602.kloster.lesson07;
+package by.it.group473602.kloster.lesson7;
 
 import org.junit.Test;
 

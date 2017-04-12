@@ -1,4 +1,4 @@
-package by.it.group473602.kloster.lesson05;
+package by.it.group473602.kloster.lesson5;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -82,7 +82,7 @@ public class C_QSortOptimized {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473602/Kloster/lesson05/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473602/Kloster/lesson5/dataC.txt");
         C_QSortOptimized instance = new C_QSortOptimized();
         int[] result=instance.getAccessory2(stream);
         for (int index:result){
