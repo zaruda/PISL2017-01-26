@@ -15,31 +15,41 @@ import java.util.Scanner;
 
 Необходимо:
     Решить задачу МЕТОДАМИ ДИНАМИЧЕСКОГО ПРОГРАММИРОВАНИЯ
-    Итерационно вычислить расстояние редактирования двух данных непустых строк
+    Итерационно вычислить алгоритм преобразования двух данных непустых строк
+    Вывести через запятую редакционное предписание в формате:
+     операция("+" вставка, "-" удаление, "~" замена, "#" копирование)
+     символ замены или вставки
 
     Sample Input 1:
     ab
     ab
     Sample Output 1:
-    0
+    #,#,
 
     Sample Input 2:
     short
     ports
     Sample Output 2:
-    3
+    -s,~p,#,#,#,+s,
 
     Sample Input 3:
     distance
     editing
-    Sample Output 3:
-    5
+    Sample Output 2:
+    +e,#,#,-s,#,~i,#,-c,~g,
 
+
+    P.S. В литературе обычно действия редакционных предписаний обозначаются так:
+    - D (англ. delete) — удалить,
+    + I (англ. insert) — вставить,
+    ~ R (replace) — заменить,
+    # M (match) — совпадение.
 */
 
-public class B_EditDist {
+public class C_EditDist {
 
-    int getDistanceEdinting(String one, String two) {
+    String getDistanceEdinting(String one, String two) {
+		
 	int[][] levensteignDistances = new int[one.length() + 1][two.length() + 1];
 
 	for (int i = 0; i < one.length() + 1; i++) {
@@ -57,20 +67,54 @@ public class B_EditDist {
 			levensteignDistances[i + 1][j] + 1), levensteignDistances[i][j] + cost);
 	    }
 	}
-
-	int result = levensteignDistances[one.length()][two.length()];
 	
-	return result;	
+	return formSequenceChanges(levensteignDistances, one, two);
+    }
+
+    private static String formSequenceChanges(int[][] levensteignDistances, String one, String two) {
+
+	StringBuilder result = new StringBuilder();
+
+	int a = one.length();
+	int b = two.length();
+
+	while (a > 0) {
+	    while (b > 0) {
+
+		int needToBeInsert = levensteignDistances[a][b - 1];
+		int needToBeDelete = levensteignDistances[a - 1][b];
+		int needToBeReplace = levensteignDistances[a - 1][b - 1];
+		int minimum = Math.min(Math.min(needToBeDelete, needToBeInsert), needToBeReplace);
+
+		if (minimum == needToBeReplace) {
+		    int cost = getDiff(one.charAt(a-- - 1), two.charAt(b-- - 1));
+		    if (cost == 0) {
+			result.append("#,");
+		    }
+		    if (cost == 1) {
+			result.append("~" + two.charAt(b) + ",");
+		    }
+		}
+		if (minimum == needToBeDelete) {
+		    result.append("-" + one.charAt(--a) + ",");
+		}
+		if (minimum == needToBeInsert) {
+		    result.append("+" + two.charAt(--b) + ",");
+		}
+	    }
+	}
+	return result.toString();
+
     }
 
     private static int getDiff(char one, char two) {
-	return (one != two) ? 1 : 0;
+	return one != two ? 1 : 0;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 	String root = System.getProperty("user.dir") + "/src/";
 	InputStream stream = new FileInputStream(root + "by/it/group473602/matys/lesson7/dataABC.txt");
-	B_EditDist instance = new B_EditDist();
+	C_EditDist instance = new C_EditDist();
 	Scanner scanner = new Scanner(stream);
 	System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
 	System.out.println(instance.getDistanceEdinting(scanner.nextLine(), scanner.nextLine()));
