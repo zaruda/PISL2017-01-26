@@ -111,7 +111,7 @@ public class A_QSort {
         quickSort(segments,0,segments.length-1);
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
-                if (points[i]>=segments[j].start&&points[i]<=segments[j].stop){
+                if (points[i]>=segments[j].start && points[i]<=segments[j].stop){
                     result[i]++;
                 }
             }
