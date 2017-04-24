@@ -46,6 +46,21 @@ public class A_LIS {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int [] array = new int[n];
+        for (int i=0;i<n;i++){
+            array[i]=1;
+            for(int j=0;j<i-1;j++){
+                if(m[j]<m[i] && array[j]+1>array[i]){
+                    array[i]=array[j]+1;
+                }
+
+            }
+        }
+        for(int i=0;i<n;i++){
+            if (result<array[i]){
+                result=array[i];
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -55,7 +70,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/dontsova/lesson6/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);

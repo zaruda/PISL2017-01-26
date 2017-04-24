@@ -34,6 +34,15 @@ import java.util.Scanner;
     1 0 0
 
 */
+/*If the array contains more than one element then:
+
+Select an element from the array. This element is called the "pivot element". For example select the element in the middle of the array.
+
+All elements which are smaller than the pivot element are placed in one array and all elements which are larger are placed in another array.
+
+Sort both arrays by recursively applying Quicksort to them.
+
+Combine the arrays.*/
 
 public class A_QSort {
 
