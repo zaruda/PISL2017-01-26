@@ -97,10 +97,6 @@ public class A_QSort {
         }
         //тут реализуйте логику задачи с применением быстрой сортировки
         //в классе отрезка Segment реализуйте нужный для этой задачи компаратор
-
-
-
-
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -112,10 +108,10 @@ public class A_QSort {
         int j = end;
         Segment current = array[i - (i - j) / 2];
         while (i < j) {
-            while (array[i].compareTo(current)==-1) {
+            while (array[i].compareTo(current)==-1) { //пока текущ знач из левого листа меньше ключевого берем следующий эл из левого листа
                 i++;
             }
-            while (current.compareTo(array[j])==1) {
+            while (current.compareTo(array[j])==1) {  //пока текущ знач из правого листа больше ключевого берем следующий эл из правого листа
                 j--;
             }
             if (i < j) {
