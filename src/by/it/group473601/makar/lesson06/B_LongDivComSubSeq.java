@@ -36,7 +36,7 @@ public class B_LongDivComSubSeq {
         Scanner scanner = new Scanner(stream);
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         //общая длина последовательности
-        int n = scanner.nextInt();
+        int n = scanner.nextInt(); // длина массива
         int[] m = new int[n];
         //читаем всю последовательность
         for (int i = 0; i < n; i++) {
@@ -44,8 +44,20 @@ public class B_LongDivComSubSeq {
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
-
-
+        int sequence [] = new int[n];
+        for(int i = 0; i < n; i++){
+            sequence[i] = 1;
+            for(int j = 0; j < i; j++){
+                if(m[i]%m[j] == 0 && sequence[j] + 1 > sequence[i]){
+                    sequence[i] = sequence[j] + 1;
+                }
+            }
+        }
+        for(int i = 0; i < n; i++){
+            if(sequence[i] > result){
+                result = sequence[i];
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -53,7 +65,7 @@ public class B_LongDivComSubSeq {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataB.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/makar/lesson06/dataB.txt");
         B_LongDivComSubSeq instance = new B_LongDivComSubSeq();
         int result = instance.getDivSeqSize(stream);
         System.out.print(result);
