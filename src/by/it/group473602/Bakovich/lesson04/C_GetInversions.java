@@ -36,7 +36,7 @@ Sample Output:
 
 public class C_GetInversions {
 
-    int merge(int[] arr, int[] left, int[] right) {
+   int merge(int[] arr, int[] left, int[] right) {
         int i = 0, j = 0, count = 0;
         while (i < left.length || j < right.length) {
             if (i == left.length) {

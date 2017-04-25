@@ -129,7 +129,7 @@ public class A_Huffman {
             if(count.containsKey(symbol))
             {
                 frequency = count.get(symbol);
-                count.put(symbol, frequency++);
+                count.put(symbol, ++frequency);
             }
             else count.put(symbol,1);
         }
