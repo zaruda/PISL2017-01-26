@@ -35,6 +35,38 @@ Sample Output:
 
 public class C_GetInversions {
 
+    int count = 0;
+
+    private int[] merge(int[] a, int b[]){
+        int i=0;
+        int j=0;
+        int []res = new int [a.length + b.length];
+        for (int k = 0; k<res.length; k++){
+            if (j==b.length || (i < a.length && a[i] <= b[j])){
+                res[k] = a[i];
+                i++;
+            } else{
+                count += a.length - i;
+                res[k] = b[j];
+                j++;
+            }
+        }
+        return res;
+    }
+
+    private int[] mergeSort(int[] a){
+        if (a.length==1) return a;
+        int n = a.length;
+        int m = n/2;
+        int [] left = new int[m];
+        int [] right = new int[n-m];
+        System.arraycopy(a, 0,left, 0, m);
+        System.arraycopy(a,m,right,0, n-m);
+        left=mergeSort(left);
+        right=mergeSort(right);
+        return merge(left, right);
+    }
+
     int calc(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -48,15 +80,8 @@ public class C_GetInversions {
         }
         int result = 0;
         //!!!!!!!!!!!!!!!!!!!!!!!!     тут ваше решение   !!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-
-
-
-
-
-
+        int b[] = mergeSort(a);
+        result = count;
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -64,7 +89,7 @@ public class C_GetInversions {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson4/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473602/kloster/lesson4/dataC.txt");
         C_GetInversions instance = new C_GetInversions();
         //long startTime = System.currentTimeMillis();
         int result = instance.calc(stream);
