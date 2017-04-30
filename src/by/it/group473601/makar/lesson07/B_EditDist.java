@@ -40,21 +40,46 @@ import java.util.Scanner;
 public class B_EditDist {
 
 
-    int getDistanceEdinting(String one, String two) {
+    int getDistanceEdinting(String firstString, String secondString) {
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-        int result = 0;
+        int distances [][]= new int[firstString.length() + 1][secondString.length() + 1];
+        for (int i = 0; i < firstString.length() + 1; i++) {
+            distances[i][0] = i;
+        }
+        for (int j = 0; j < secondString.length() + 1; j++) {
+            distances[0][j] = j;
+        }
+        for (int i = 0; i < firstString.length(); i++) {
+            for (int j = 0; j < secondString.length(); j++) {
+                int coef = getDifference(firstString.charAt(i), secondString.charAt(j));
+                distances[i + 1][j + 1] = getMinimum(distances[i - 1 + 1][j + 1] + 1, distances[i + 1][j - 1 + 1] + 1, distances[i - 1 + 1][j - 1 + 1] + coef);
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+        int result=distances[firstString.length()][secondString.length()];
         return result;
     }
 
+    int getDifference(char first, char second){
+        return first == second ? 0: 1;
+    }
 
+    int getMinimum(int first, int second, int third) {
+        int min = -1;
+        if (first < second) {
+            min = first;
+        } else {
+            min = second;
+        }
+        if (min > third) {
+            min = third;
+        }
+        return min;
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson08/dataABC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/makar/lesson08/dataABC.txt");
         B_EditDist instance = new B_EditDist();
         Scanner scanner = new Scanner(stream);
         System.out.println(instance.getDistanceEdinting(scanner.nextLine(),scanner.nextLine()));

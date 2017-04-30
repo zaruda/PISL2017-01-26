@@ -87,8 +87,8 @@ public class A_EditDist {
         return array[i][j];
     }
 
-    private static int getDifference(char one, char two){
-        return one != two ? 1: 0;
+    int getDifference(char first, char second){
+        return first == second ? 0: 1;
     }
 
     int getMinimum(int first, int second, int third) {
