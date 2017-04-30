@@ -66,7 +66,7 @@ public class A_EditDist {
     int editDistance(int i, int j, int[][] array, int max, String firstString, String secondString) {
         int insert=0;
         int delete=0;
-        int replecemtnt=0;
+        int replecement=0;
         if (array[i][j] == max){
             if (i == 0){
                 array[i][j] = j;
@@ -78,9 +78,9 @@ public class A_EditDist {
                 else {
                     insert = editDistance(i, j - 1, array, max, firstString, secondString) + 1;
                     delete = editDistance(i - 1 , j, array, max, firstString, secondString) + 1;
-                    replecemtnt = editDistance(i - 1 , j - 1, array, max, firstString, secondString) + getDifference(firstString.charAt(i-1), secondString.charAt(j-1));
+                    replecement = editDistance(i - 1 , j - 1, array, max, firstString, secondString) + getDifference(firstString.charAt(i-1), secondString.charAt(j-1));
 
-                    array[i][j] = getMinimum(insert, delete, replecemtnt);
+                    array[i][j] = getMinimum(insert, delete, replecement);
                 }
             }
         }
