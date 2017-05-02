@@ -32,7 +32,12 @@ Sample Output:
 Докажите рост производительности замерами времени.
 Большой тестовый массив можно прочитать свой или сгенерировать его программно.
 */
+/*This is almost normal merge sort, the whole magic is hidden in merge function. Note that while sorting
+algorithm remove inversions. While merging algorithm counts number of removed inversions (sorted out one might say).
 
+The only moment when inversions are removed is when algorithm takes element from the right side of an array
+and merge it to the main array. The number of inversions removed by this operation is the number of elements left
+from the the left array to be merged. :)*/
 
 public class C_GetInversions {
 
