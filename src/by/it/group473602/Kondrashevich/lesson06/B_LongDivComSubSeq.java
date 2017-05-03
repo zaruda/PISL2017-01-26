@@ -58,9 +58,9 @@ public class B_LongDivComSubSeq {
                     maxLength[i] = maxLength[j] + 1;
         }
 
-        for (int i = 0; i < maxLength.length; i++) {
-            if (maxLength[i] > result) {
-                result = maxLength[i];
+        for (int aMaxLength : maxLength) {
+            if (aMaxLength > result) {
+                result = aMaxLength;
             }
         }
 

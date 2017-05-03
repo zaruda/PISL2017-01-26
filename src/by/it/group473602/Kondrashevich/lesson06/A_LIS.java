@@ -59,9 +59,9 @@ public class A_LIS {
         }
 
         int result = 0;
-        for (int i = 0; i < max.length; i++) {
-            if (max[i] > result) {
-                result = max[i];
+        for (int aMax : max) {
+            if (aMax > result) {
+                result = aMax;
             }
         }
 

@@ -70,9 +70,9 @@ public class C_LongNotUpSubSeq {
                 }
         }
 
-        for (int i = 0; i < maxLength.length; i++) {
-            if (maxLength[i] > result) {
-                result = maxLength[i];
+        for (int aMaxLength : maxLength) {
+            if (aMaxLength > result) {
+                result = aMaxLength;
             }
         }
 
@@ -87,6 +87,7 @@ public class C_LongNotUpSubSeq {
             numberOfNotUpSubSeq[j] = k + 1;
             k = prevIndex[k];
         }
+
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
