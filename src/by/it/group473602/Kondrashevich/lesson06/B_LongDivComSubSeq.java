@@ -45,6 +45,24 @@ public class B_LongDivComSubSeq {
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
 
+        if (m == null || m.length == 0) {
+            return 0;
+        }
+
+        int[] maxLength = new int[m.length];
+
+        for (int i = 0; i < m.length; i++) {
+            maxLength[i] = 1;
+            for (int j = 0; j < i; j++)
+                if (m[i] % m[j] == 0 && maxLength[j] + 1 > maxLength[i])
+                    maxLength[i] = maxLength[j] + 1;
+        }
+
+        for (int i = 0; i < maxLength.length; i++) {
+            if (maxLength[i] > result) {
+                result = maxLength[i];
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;

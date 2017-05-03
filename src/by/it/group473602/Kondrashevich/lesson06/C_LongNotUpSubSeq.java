@@ -53,6 +53,41 @@ public class C_LongNotUpSubSeq {
         int result = 0;
 
 
+        if (m == null || m.length == 0) {
+            return 0;
+        }
+
+        int[] maxLength = new int[m.length];
+        int[] prevIndex = new int[m.length];
+
+        for (int i = 0; i < m.length; i++) {
+            maxLength[i] = 1;
+            prevIndex[i] = -1;
+            for (int j = 0; j < i; j++)
+                if (m[j] >= m[i] && maxLength[j] + 1 >= maxLength[i]) {
+                    maxLength[i] = maxLength[j] + 1;
+                    prevIndex[i] = j;
+                }
+        }
+
+        for (int i = 0; i < maxLength.length; i++) {
+            if (maxLength[i] > result) {
+                result = maxLength[i];
+            }
+        }
+
+        int[] numberOfNotUpSubSeq = new int[result];
+        int k = 1;
+        for (int i = 1; i < m.length; i++) {
+            if (maxLength[i] > maxLength[k]) {
+                k = i;
+            }
+        }
+        for(int j = result - 1; k>=0; j--){
+            numberOfNotUpSubSeq[j] = k + 1;
+            k = prevIndex[k];
+        }
+
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
