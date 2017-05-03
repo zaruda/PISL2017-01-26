@@ -32,7 +32,6 @@ import java.util.Scanner;
 
 public class A_LIS {
 
-
     int getSeqSize(InputStream stream) throws FileNotFoundException {
         //подготовка к чтению данных
         Scanner scanner = new Scanner(stream);
@@ -45,7 +44,26 @@ public class A_LIS {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
+
+        if (m == null || m.length == 0) {
+            return 0;
+        }
+
+        int[] max = new int[m.length];
+
+        for (int i = 0; i < m.length; i++) {
+            max[i] = 1;
+            for (int j = 0; j < i; j++)
+                if (m[i] > m[j])
+                    max[i] = Math.max(max[i], max[j] + 1);
+        }
+
         int result = 0;
+        for (int i = 0; i < max.length; i++) {
+            if (max[i] > result) {
+                result = max[i];
+            }
+        }
 
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -55,7 +73,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473602/Kondrashevich/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
