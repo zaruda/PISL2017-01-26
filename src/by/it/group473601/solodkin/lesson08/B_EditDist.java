@@ -1,4 +1,4 @@
-package by.it.group473601.solodkin.lesson07;
+package by.it.group473601.solodkin.lesson08;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -70,12 +70,12 @@ public class B_EditDist {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/group473601/solodkin/lesson07/dataABC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/solodkin/lesson08/dataABC.txt");
         B_EditDist instance = new B_EditDist();
         Scanner scanner = new Scanner(stream);
-        System.out.println(instance.getDistanceEditing(scanner.nextLine(), scanner.nextLine()));
-        System.out.println(instance.getDistanceEditing(scanner.nextLine(), scanner.nextLine()));
-        System.out.println(instance.getDistanceEditing(scanner.nextLine(), scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
+        System.out.println(instance.getDistanceEditing(scanner.nextLine(),scanner.nextLine()));
     }
 
 }
