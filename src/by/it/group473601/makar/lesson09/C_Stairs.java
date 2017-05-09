@@ -43,12 +43,18 @@ public class C_Stairs {
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         int result = 0;
-
-
-
-
+        int[] sum = new int[n + 1];
+        sum[0] = 0;
+        for (int i = 1; i < n + 1; i++) {
+            sum[i] = getMax(sum[i], sum[i - stairs[i - 1]] + stairs[i - 1]);
+        }
+        result = sum[n];
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
+    }
+
+    private static int getMax(int first, int second){
+        return first >= second ? first : second;
     }
 
 
