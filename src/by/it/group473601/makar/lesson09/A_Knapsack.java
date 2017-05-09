@@ -50,8 +50,7 @@ public class A_Knapsack {
             for(int j = 0; j < n; j++){
                 if(gold[j] <= i){
                     int weight = gold[j];
-                    int cost = gold[j];
-                    int sum = destination[i - weight] + cost;
+                    int sum = destination[i - weight] + weight;
                     destination[i] = getMax(destination[i],sum);
                 }
             }
