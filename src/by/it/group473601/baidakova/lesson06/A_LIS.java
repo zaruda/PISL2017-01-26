@@ -40,14 +40,28 @@ public class A_LIS {
         //общая длина последовательности
         int n = scanner.nextInt();
         int[] m = new int[n];
+        int i;
         //читаем всю последовательность
-        for (int i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
             m[i] = scanner.nextInt();
         }
         //тут реализуйте логику задачи методами динамического программирования (!!!)
         int result = 0;
+        int [] array = new int[n];
+        for (i=0;i<n;i++){
+            array[i]=1;
+            for(int j=0;j<i-1;j++){
+                if(m[j]<m[i] && array[j]+1>array[i]){
+                    array[i]=array[j]+1;
+                }
 
-
+            }
+        }
+        for(i=0;i<n;i++){
+            if (result<array[i]){
+                result=array[i];
+            }
+        }
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
         return result;
     }
@@ -55,7 +69,7 @@ public class A_LIS {
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson06/dataA.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/baidakova/lesson06/dataA.txt");
         A_LIS instance = new A_LIS();
         int result = instance.getSeqSize(stream);
         System.out.print(result);
