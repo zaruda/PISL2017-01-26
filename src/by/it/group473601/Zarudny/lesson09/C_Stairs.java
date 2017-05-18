@@ -59,20 +59,18 @@ public class C_Stairs {
             }
         }
 
-        int result = arrayResult[countOfStep - 1];
-
         /*for (int k = 0; k < arrayResult.length; k++) {
             System.out.printf(arrayResult[k] + " ");
         }
         System.out.println();*/
         //!!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
-        return result;
+        return arrayResult[countOfStep - 1];
     }
 
 
     public static void main(String[] args) throws FileNotFoundException {
         String root = System.getProperty("user.dir") + "/src/";
-        InputStream stream = new FileInputStream(root + "by/it/a_khmelov/lesson09/dataC.txt");
+        InputStream stream = new FileInputStream(root + "by/it/group473601/Zarudny/lesson09/dataC.txt");
         C_Stairs instance = new C_Stairs();
         int res=instance.getMaxSum(stream);
         System.out.println(res);
